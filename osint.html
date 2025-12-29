@@ -52,6 +52,21 @@
     @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 
     @media (max-width:720px){.tool-btn{flex:1 1 100%;justify-content:center}}
+    /* Live preview styles for lookup inputs */
+    .lookup-preview{margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(90deg, rgba(7,12,20,0.6), rgba(10,18,30,0.55));border:1px solid rgba(127,219,255,0.04);color:var(--text-secondary);font-size:0.95rem}
+    .lookup-preview .muted{color:var(--text-secondary);font-size:0.92rem}
+    .lookup-preview .tool-btn{padding:8px 12px;font-size:0.9rem}
+    /* OSINT page two-column layout and TOC styles */
+    .osint-layout{margin-top:28px}
+    .toc .section-title{font-size:1rem;margin:0 0 8px;color:var(--accent-primary)}
+    .toc ul{list-style:none;margin:0;padding:0}
+    .toc li{margin-bottom:6px}
+    .toc a{display:block;padding:6px 8px;border-radius:6px;color:var(--text-secondary);text-decoration:none;font-weight:600}
+    .toc a:hover{background:rgba(0,255,160,0.04);color:var(--accent-primary)}
+    @media (min-width:920px){
+      .osint-layout{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start}
+      .toc{position:sticky;top:84px;padding:14px;border-radius:10px;background:linear-gradient(90deg, rgba(6,12,22,0.55), rgba(8,18,30,0.5));border:1px solid rgba(127,219,255,0.04)}
+    }
   </style>
 </head>
 <body>
@@ -68,6 +83,7 @@
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="roadmap.html" class="nav-link">Roadmap</a></li>
         <li><a href="tools.html" class="nav-link">Tools</a></li>
+        <li><a href="tech-store.html" class="nav-link">Store</a></li>
         <li><a href="ctf-news.html" class="nav-link">CTF & News</a></li>
         <li><a href="osint.html" class="nav-link active">OSINT</a></li>
         <li><a href="about.html" class="nav-link">About</a></li>
@@ -90,9 +106,29 @@
     </div>
   </section>
 
-  <main class="container">
+  <!-- Two-column layout: TOC (left) + content (right) -->
+  <div class="osint-layout container">
+    <aside class="toc" aria-label="OSINT navigation">
+      <h3 class="section-title">On this page</h3>
+      <nav>
+        <ul>
+          <li><a href="#mobile-lookup">Mobile Number Lookup</a></li>
+          <li><a href="#username-lookup">Username / People</a></li>
+          <li><a href="#domain-lookup">Domain Lookup</a></li>
+          <li><a href="#image-lookup">Image / Face Search</a></li>
+          <li><a href="#email-lookup">Email Lookup</a></li>
+          <li><a href="#geo">Geolocation / Maps</a></li>
+          <li><a href="#public-records">Public Records</a></li>
+          <li><a href="#cyber">Cybersecurity / Network</a></li>
+          <li><a href="#social">Social Media + Dark Web</a></li>
+          <li><a href="#upcoming-features">Upcoming Features</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <section class="section-block">
+    <main class="container">
+
+    <section id="mobile-lookup" class="section-block">
       <h2 class="section-title">Mobile Number OSINT Lookup</h2>
       <p class="section-sub">Enter a mobile number and choose a tool — opens the tool with the number searched automatically. If the field is empty the button opens the tool homepage.</p>
 
@@ -100,28 +136,37 @@
         <label for="mobileQuery" class="sr-only">Mobile number</label>
         <input id="mobileQuery" class="lookup-input" placeholder="Enter mobile number (e.g., +1234567890)" inputmode="tel" aria-label="Mobile number">
 
+        <!-- Live preview / suggestions for mobile numbers -->
+        <div id="mobilePreview" class="lookup-preview" aria-live="polite" hidden>
+          <div id="mobilePreviewState" class="muted">Waiting for input...</div>
+          <div id="mobilePreviewNormalized" style="margin-top:6px;display:none;"></div>
+          <div id="mobilePreviewActions" style="margin-top:8px;display:none;">
+            <a id="mobilePreviewTelegram" class="tool-btn secondary" href="#" target="_blank" rel="noopener noreferrer">Open in Telegram</a>
+          </div>
+        </div>
+
         <div class="lookup-buttons" role="list">
-          <button class="tool-btn" data-home="https://t.me/UniversalSearchBot_bot" data-search="https://www.google.com/search?q={QUERY}+site:t.me/UniversalSearchBot_bot" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://t.me/UniversalSearchBot_botBot" data-search="https://www.google.com/search?q={QUERY}+site:t.me/UniversalSearchBot_botBot" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.6 4 2 7L12 16 5.6 20l2-7L2 9h7l3-7z" fill="currentColor"/></svg>
             <span>UniversalSearchBot</span>
           </button>
 
-          <button class="tool-btn" data-home="https://www.truecaller.com" data-search="https://www.truecaller.com/search/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://www.truecaller.com" data-search="https://www.truecaller.com/search/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="currentColor"/></svg>
             <span>Truecaller</span>
           </button>
 
-          <button class="tool-btn" data-home="https://www.getcontact.com" data-search="https://www.google.com/search?q={QUERY}+site:getcontact.com" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://www.getcontact.com" data-search="https://www.google.com/search?q={QUERY}+site:getcontact.com" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><rect width="20" height="14" x="2" y="5" rx="2" fill="currentColor"/></svg>
             <span>GetContact</span>
           </button>
 
-          <button class="tool-btn" data-home="https://www.eyecon-app.com" data-search="https://www.google.com/search?q={QUERY}+site:eyecon-app.com" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://www.eyecon-app.com" data-search="https://www.google.com/search?q={QUERY}+site:eyecon-app.com" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
             <span>Eyecon</span>
           </button>
 
-          <button class="tool-btn" data-home="https://numverify.com" data-search="https://www.google.com/search?q={QUERY}+site:numverify.com" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://numverify.com" data-search="https://www.google.com/search?q={QUERY}+site:numverify.com" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" stroke-width="2"/></svg>
             <span>NumVerify</span>
           </button>
@@ -132,34 +177,34 @@
 
     </section>
 
-    <section class="section-block">
+    <section id="username-lookup" class="section-block">
       <h2 class="section-title">Username / People OSINT</h2>
       <p class="section-sub">People and username search tools (homepage links). Replace query where applicable on each site.</p>
       <div class="lookup-card" style="margin-bottom:18px;">
         <label for="usernameQuery" class="sr-only">Username</label>
         <input id="usernameQuery" class="lookup-input" placeholder="Enter username (e.g., alice123)" aria-label="Username">
         <div class="lookup-buttons" role="list">
-          <button class="tool-btn" data-home="https://whatsmyname.app" data-search="https://whatsmyname.app/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://whatsmyname.app" data-search="https://whatsmyname.app/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="currentColor"/></svg>
             <span>WhatsMyName</span>
           </button>
 
-          <button class="tool-btn" data-home="https://github.com/sherlock-project/sherlock" data-search="https://www.google.com/search?q={QUERY}+site:github.com/sherlock-project" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://github.com/sherlock-project/sherlock" data-search="https://www.google.com/search?q={QUERY}+site:github.com/sherlock-project" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor"/></svg>
             <span>Sherlock</span>
           </button>
 
-          <button class="tool-btn" data-home="https://www.social-searcher.com" data-search="https://www.social-searcher.com/search?q={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://www.social-searcher.com" data-search="https://www.social-searcher.com/search?q={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
             <span>Social Searcher</span>
           </button>
 
-          <button class="tool-btn" data-home="https://pipl.com" data-search="https://pipl.com/search/?q={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://pipl.com" data-search="https://pipl.com/search/?q={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" stroke-width="2"/></svg>
             <span>Pipl</span>
           </button>
 
-          <button class="tool-btn" data-home="https://namecheckup.com" data-search="https://namecheckup.com/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://namecheckup.com" data-search="https://namecheckup.com/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" fill="currentColor"/></svg>
             <span>Namecheckup</span>
           </button>
@@ -192,7 +237,7 @@
       </div>
     </section>
 
-    <section class="section-block">
+    <section id="domain-lookup" class="section-block">
       <h2 class="section-title">Domain OSINT Lookup</h2>
       <p class="section-sub">Enter a domain (e.g., example.com) and choose a tool — opens the tool with the domain searched automatically. If the field is empty the button opens the tool homepage.</p>
 
@@ -201,27 +246,27 @@
         <input id="domainQuery" class="lookup-input" placeholder="Enter domain (e.g., example.com)" inputmode="url" aria-label="Domain">
 
         <div class="lookup-buttons" role="list">
-          <button class="tool-btn" data-home="https://who.is" data-search="https://who.is/whois/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://who.is" data-search="https://who.is/whois/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" stroke-width="2"/></svg>
             <span>Whois</span>
           </button>
 
-          <button class="tool-btn" data-home="https://dnsdumpster.com" data-search="https://www.google.com/search?q={QUERY}+site:dnsdumpster.com" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://dnsdumpster.com" data-search="https://www.google.com/search?q={QUERY}+site:dnsdumpster.com" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor"/></svg>
             <span>DNSDumpster</span>
           </button>
 
-          <button class="tool-btn" data-home="https://securitytrails.com" data-search="https://securitytrails.com/domain/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://securitytrails.com" data-search="https://securitytrails.com/domain/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
             <span>SecurityTrails</span>
           </button>
 
-          <button class="tool-btn" data-home="https://www.virustotal.com" data-search="https://www.virustotal.com/gui/domain/{QUERY}/details" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://www.virustotal.com" data-search="https://www.virustotal.com/gui/domain/{QUERY}/details" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="currentColor"/></svg>
             <span>VirusTotal</span>
           </button>
 
-          <button class="tool-btn" data-home="https://crt.sh" data-search="https://crt.sh/?q={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://crt.sh" data-search="https://crt.sh/?q={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" fill="currentColor"/></svg>
             <span>crt.sh</span>
           </button>
@@ -232,7 +277,7 @@
 
     </section>
 
-    <section class="section-block">
+    <section id="image-lookup" class="section-block">
       <h2 class="section-title">Image OSINT / Face Search</h2>
       <p class="section-sub">Search an image by URL across reverse-image services. Paste an image URL and choose a tool — if the field is empty the button opens the tool homepage.</p>
 
@@ -241,27 +286,27 @@
         <input id="imageQuery" class="lookup-input" placeholder="Paste image URL (https://example.com/photo.jpg)" inputmode="url" aria-label="Image URL">
 
         <div class="lookup-buttons" role="list">
-          <button class="tool-btn" data-home="https://lens.google.com" data-search="https://www.google.com/searchbyimage?image_url={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://lens.google.com" data-search="https://www.google.com/searchbyimage?image_url={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="currentColor"/></svg>
             <span>Google Image</span>
           </button>
 
-          <button class="tool-btn" data-home="https://yandex.com/images/" data-search="https://yandex.com/images/search?rpt=imageview&url={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://yandex.com/images/" data-search="https://yandex.com/images/search?rpt=imageview&url={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
             <span>Yandex</span>
           </button>
 
-          <button class="tool-btn" data-home="https://tineye.com" data-search="https://tineye.com/search?url={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://tineye.com" data-search="https://tineye.com/search?url={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor"/></svg>
             <span>TinEye</span>
           </button>
 
-          <button class="tool-btn" data-home="https://fotoforensics.com" data-search="https://fotoforensics.com/analysis.php?image={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://fotoforensics.com" data-search="https://fotoforensics.com/analysis.php?image={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" fill="currentColor"/></svg>
             <span>FotoForensics</span>
           </button>
 
-          <button class="tool-btn" data-home="https://imgops.com" data-search="https://imgops.com/?url={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://imgops.com" data-search="https://imgops.com/?url={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" stroke-width="2"/></svg>
             <span>ImgOps</span>
           </button>
@@ -283,7 +328,7 @@
       </div>
     </section>
 
-    <section class="section-block">
+    <section id="email-lookup" class="section-block">
       <h2 class="section-title">Email OSINT</h2>
       <p class="section-sub">Search an email address across common OSINT services. If the field is empty the button opens the tool homepage.</p>
 
@@ -292,27 +337,27 @@
         <input id="emailQuery" class="lookup-input" placeholder="Enter email address (e.g., user@example.com)" inputmode="email" aria-label="Email address">
 
         <div class="lookup-buttons" role="list">
-          <button class="tool-btn" data-home="https://hunter.io" data-search="https://www.google.com/search?q={QUERY}+site:hunter.io" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://hunter.io" data-search="https://www.google.com/search?q={QUERY}+site:hunter.io" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="currentColor" stroke-width="2"/></svg>
             <span>Hunter</span>
           </button>
 
-          <button class="tool-btn" data-home="https://haveibeenpwned.com" data-search="https://haveibeenpwned.com/unifiedsearch/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://haveibeenpwned.com" data-search="https://haveibeenpwned.com/unifiedsearch/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
             <span>HaveIBeenPwned</span>
           </button>
 
-          <button class="tool-btn" data-home="https://www.dehashed.com" data-search="https://www.dehashed.com/search?query={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://www.dehashed.com" data-search="https://www.dehashed.com/search?query={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor"/></svg>
             <span>Dehashed</span>
           </button>
 
-          <button class="tool-btn" data-home="https://emailrep.io" data-search="https://emailrep.io/{QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://emailrep.io" data-search="https://emailrep.io/{QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="currentColor"/></svg>
             <span>EmailRep</span>
           </button>
 
-          <button class="tool-btn" data-home="https://mailtester.com" data-search="https://mailtester.com/testmail.php?email={QUERY}" role="listitem">
+          <button type="button" class="tool-btn" data-home="https://mailtester.com" data-search="https://mailtester.com/testmail.php?email={QUERY}" role="listitem">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" fill="currentColor"/></svg>
             <span>MailTester</span>
           </button>
@@ -335,7 +380,7 @@
       </div>
     </section>
 
-    <section class="section-block">
+    <section id="geo" class="section-block">
       <h2 class="section-title">Geolocation / Maps OSINT</h2>
       <div class="osint-grid">
         <a class="tool-box" href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>
@@ -350,7 +395,7 @@
       </div>
     </section>
 
-    <section class="section-block">
+    <section id="public-records" class="section-block">
       <h2 class="section-title">Public Records / Government</h2>
       <div class="osint-grid">
         <a class="tool-box" href="https://www.courtlistener.com" target="_blank" rel="noopener">CourtListener</a>
@@ -365,7 +410,7 @@
       </div>
     </section>
 
-    <section class="section-block">
+    <section id="cyber" class="section-block">
       <h2 class="section-title">Cybersecurity / Network</h2>
       <div class="osint-grid">
         <a class="tool-box" href="https://www.shodan.io" target="_blank" rel="noopener">Shodan</a>
@@ -387,7 +432,7 @@
       </div>
     </section>
 
-    <section class="section-block">
+    <section id="social" class="section-block">
       <h2 class="section-title">Social Media OSINT + Dark Web</h2>
       <div class="osint-grid">
         <a class="tool-box" href="#" target="_blank" rel="noopener">Instagram Scraper</a>
@@ -403,7 +448,63 @@
       </div>
     </section>
 
-  </main>
+    <section id="upcoming-features" class="section-block">
+      <h2 class="section-title">Upcoming Features / Roadmap</h2>
+      <p class="section-sub">Planned OSINT enhancements — quick overview of features we're adding to the toolkit.</p>
+
+      <div class="osint-grid">
+        <div class="tool-box">
+          <strong>🔍 Live Search Preview</strong>
+          <small>As user types number/email → show automatic suggestions & validation.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🧠 AI-Powered Data Summary</strong>
+          <small>Collect results from multiple sites and present a concise AI summary report.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🌍 IP Geolocation Map</strong>
+          <small>Enter IP → show map, ISP, ASN, DNS and TOR exit detection.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🕵️‍♂️ Dark Web Leak Scanner</strong>
+          <small>Check breaches and surface dark web exposure score for email/phone.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🖼️ AI Reverse Image Detect</strong>
+          <small>Face / Image OSINT — match images to social profile predictions.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>📡 Wi-Fi Network Scanner</strong>
+          <small>Wigle integration + local Wi‑Fi device scanning (browser-permissions).</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🎞️ Social Media Metadata Extractor</strong>
+          <small>Paste a post link to extract posted time, location and metadata.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>⏳ Archive Watch</strong>
+          <small>Auto-check Wayback snapshots and show a visual timeline slider.</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🛰️ CCTV / Traffic Cam Finder</strong>
+          <small>Locate public cameras near a given location (where available).</small>
+        </div>
+
+        <div class="tool-box">
+          <strong>🎤 Voice Print Lookup (Experimental)</strong>
+          <small>Upload a short voice clip to search for audio/video matches (experimental).</small>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script>
     // Centralized lookup initializer: attach per-card handlers that open tool search (if {QUERY} present)
@@ -431,17 +532,48 @@
               }catch(e){ /* fallback to raw q if parsing fails */ }
             }
 
-            if(q && search && search.indexOf('{QUERY}') !== -1){
-              const encoded = encodeURIComponent(q);
-              const url = search.replace('{QUERY}', encoded);
-              window.open(url, '_blank');
+            const encoded = encodeURIComponent(q);
+
+            function appendQuery(base){
+              if(!base) return base || '#';
+              if(base.indexOf('{QUERY}') !== -1) return base.replace('{QUERY}', encoded);
+              // if URL already has query params, append as &q=..., else ?q=...
+              try{
+                const urlObj = new URL(base);
+                urlObj.searchParams.set('q', q);
+                return urlObj.toString();
+              }catch(e){
+                return (base.indexOf('?') !== -1) ? (base + '&q=' + encoded) : (base.replace(/\/$/, '') + '?q=' + encoded);
+              }
+            }
+
+            if(q){
+              // detect phone-like inputs (digits with optional leading +, spaces, dashes, parentheses)
+              const isPhone = /^\+?\d[\d\s\-()]*$/.test(q);
+              const normalizedPhone = q.replace(/[^\d+]/g, '');
+
+              // Special-case Telegram deep links for bots (open with ?start=NUMBER)
+              if(isPhone && home && home.includes('t.me')){
+                const sep = home.indexOf('?') === -1 ? '?' : '&';
+                const tgUrl = home + sep + 'start=' + encodeURIComponent(normalizedPhone || q);
+                window.open(tgUrl, '_blank', 'noopener,noreferrer');
+              } else if(search && search.indexOf('{QUERY}') !== -1){
+                window.open(search.replace('{QUERY}', encoded), '_blank', 'noopener,noreferrer');
+              } else if(search){
+                // search template exists but no placeholder — append query param
+                window.open(appendQuery(search), '_blank', 'noopener,noreferrer');
+              } else if(home){
+                window.open(appendQuery(home), '_blank', 'noopener,noreferrer');
+              } else {
+                window.open('#', '_blank', 'noopener,noreferrer');
+              }
             } else {
-              // fallback to homepage when search unsupported or no query
-              window.open(home || (search || '#'), '_blank');
+              // no query entered: open home or search default
+              window.open(home || (search || '#'), '_blank', 'noopener,noreferrer');
             }
           }catch(err){
             console.error('Lookup open failed', err);
-            window.open(btn.dataset.home || '#', '_blank');
+            window.open(btn.dataset.home || '#', '_blank', 'noopener,noreferrer');
           }
         }
 
@@ -455,6 +587,38 @@
               if(defaultBtn) openFor(defaultBtn);
             }
           });
+          // Live preview for mobile number input
+          if(input.id === 'mobileQuery'){
+            const preview = document.getElementById('mobilePreview');
+            const stateEl = document.getElementById('mobilePreviewState');
+            const normEl = document.getElementById('mobilePreviewNormalized');
+            const actionsEl = document.getElementById('mobilePreviewActions');
+            const tgLink = document.getElementById('mobilePreviewTelegram');
+
+            function updatePreview(){
+              const v = (input.value||'').trim();
+              if(!v){ preview.hidden = true; stateEl.textContent = 'Waiting for input...'; normEl.style.display = 'none'; actionsEl.style.display = 'none'; return; }
+              preview.hidden = false;
+              const isPhone = /^\+?\d[\d\s\-()]*$/.test(v);
+              if(isPhone){
+                stateEl.textContent = 'Detected phone number';
+                const normalized = v.replace(/[^\d+]/g,'');
+                normEl.style.display = 'block';
+                normEl.textContent = 'Normalized: ' + normalized;
+                // set Telegram deep link (uses UniversalSearchBot_bot by default)
+                tgLink.href = 'https://t.me/UniversalSearchBot_bot?start=' + encodeURIComponent(normalized);
+                actionsEl.style.display = 'block';
+              } else {
+                stateEl.textContent = 'Input does not look like a phone number';
+                normEl.style.display = 'none';
+                actionsEl.style.display = 'none';
+              }
+            }
+
+            input.addEventListener('input', updatePreview);
+            // initialize preview state
+            setTimeout(updatePreview, 60);
+          }
         }
       });
     });

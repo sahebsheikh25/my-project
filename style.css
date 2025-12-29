@@ -97,14 +97,17 @@ body {
     align-items: center;
 }
 
+/* make nav text match notification sky-blue color and glow */
 .nav-link {
-    color: var(--text-secondary);
+    color: #7FDBFF; /* same as notification text */
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1.18rem; /* increased for improved visibility */
+    transition: all 0.25s ease;
     position: relative;
     padding: 0.5rem 0;
+    text-shadow: 0 0 12px rgba(127,219,255,0.22), 0 0 30px rgba(127,219,255,0.14);
+    opacity: 0.95;
 }
 
 .nav-link::after {
@@ -114,15 +117,15 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent-primary);
-    box-shadow: 0 0 10px var(--glow-color);
-    transition: width 0.3s ease;
+    background: #7FDBFF;
+    box-shadow: 0 0 14px rgba(127,219,255,0.18);
+    transition: width 0.25s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--accent-primary);
-    text-shadow: 0 0 10px var(--glow-color);
+    color: #BFF7FF;
+    text-shadow: 0 0 18px rgba(127,219,255,0.32), 0 0 42px rgba(127,219,255,0.18);
 }
 
 .nav-link:hover::after,
@@ -174,7 +177,8 @@ body {
     font-family: var(--font-heading);
     font-size: 1.05rem;
     text-transform: none;
-    animation: scroll-left 28s linear infinite, banner-blink 1.8s ease-in-out infinite;
+    /* slower marquee: increased duration for easier reading */
+    animation: scroll-left 30s linear infinite, banner-blink 1.8s ease-in-out infinite;
     text-shadow: 0 0 16px rgba(127,219,255,0.22), 0 0 40px rgba(127,219,255,0.14);
 }
 
@@ -209,7 +213,8 @@ body {
 
 @media (max-width: 600px) {
     .notification-banner { height: 44px; }
-    .notification-banner .banner-track { font-size: 0.95rem; animation-duration: 16s; }
+    /* mobile: slower scroll for readability */
+    .notification-banner .banner-track { font-size: 0.95rem; animation-duration: 20s; }
 }
 
 /* ===== Hero Section ===== */

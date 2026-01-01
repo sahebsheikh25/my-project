@@ -206,6 +206,7 @@ body {
     text-transform: none;
     /* slower marquee: increased duration for easier reading */
     animation: scroll-left 30s linear infinite, banner-blink 1.8s ease-in-out infinite;
+    will-change: transform;
     text-shadow: 0 0 16px rgba(127,219,255,0.22), 0 0 40px rgba(127,219,255,0.14);
 }
 
@@ -222,8 +223,8 @@ body {
 }
 
 @keyframes scroll-left {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+    0% { transform: translate3d(100%,0,0); }
+    100% { transform: translate3d(-100%,0,0); }
 }
 
 @keyframes banner-pulse {
@@ -384,7 +385,7 @@ body {
 .btn-primary:hover {
     background: var(--accent-secondary);
     box-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--glow-color);
-    transform: translateY(-2px);
+    transform: translate3d(0,-2px,0);
 }
 
 .btn-secondary {
@@ -396,7 +397,12 @@ body {
 .btn-secondary:hover {
     background: rgba(0, 255, 178, 0.1);
     box-shadow: 0 0 20px var(--glow-color);
-    transform: translateY(-2px);
+    transform: translate3d(0,-2px,0);
+
+/* Hint to browser these will be animated (composited) */
+.btn, .nav-toggle span, .hero-image {
+    will-change: transform, opacity;
+}
 }
 
 .btn-large {

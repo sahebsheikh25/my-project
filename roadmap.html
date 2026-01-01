@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="icon" href="assets/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.svg">
     <title>Learning Roadmap - SN Security</title>
-    <link rel="stylesheet" href="./style.css">
+    <meta name="description" content="SN Security - Lost phone report, OSINT tools, cyber safety platform. Secure your digital identity.">
+    <link rel="preload" href="./style.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -210,7 +211,7 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="index.html" class="nav-home" aria-label="SN Security Home">
-                    <img src="assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="eager">
+                    <img src="assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
                     <span>SN Security</span>
                 </a>
             </div>
@@ -479,7 +480,7 @@
                 <div class="footer-section">
                     <div class="footer-logo">
                         <a href="index.html" class="footer-home" aria-label="SN Security Home">
-                            <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="eager">
+                            <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
                             <span>SN Security</span>
                         </a>
                     </div>
@@ -510,7 +511,7 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="roadmap.html">Roadmap</a></li>
@@ -519,7 +520,7 @@
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Resources</h4>
+                    <h3>Resources</h3>
                     <ul class="footer-links">
                         <li><a href="ctf-news.html">CTF & News</a></li>
                         <li><a href="about.html">About Us</a></li>
@@ -527,7 +528,7 @@
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Legal</h4>
+                    <h3>Legal</h3>
                     <ul class="footer-links">
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
@@ -541,9 +542,10 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></noscript>
+    <script src="./script.js" defer></script>
 </body>
 </html>

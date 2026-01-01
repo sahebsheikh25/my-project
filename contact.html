@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Contact — SN Security</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-    <link rel="icon" href="assets/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="assets/logo.png">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="apple-touch-icon" href="assets/logo.svg">
+      <meta name="description" content="SN Security - Lost phone report, OSINT tools, cyber safety platform. Secure your digital identity.">
+      <link rel="preload" href="./style.css" as="style" onload="this.rel='stylesheet'">
+      <noscript><link rel="stylesheet" href="./style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -59,7 +60,7 @@
       <div class="nav-container">
         <div class="nav-logo">
           <a href="index.html" class="nav-home" aria-label="SN Security Home">
-            <img src="assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="eager">
+            <img src="assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
             <span>SN Security</span>
           </a>
         </div>
@@ -94,7 +95,7 @@
         <aside>
           <div class="intro-card">
             <h3>Email</h3>
-            <p class="section-subtitle">For direct inquiries, security disclosures, or corrections, email: <a href="mailto:security@example.com">security@example.com</a></p>
+            <p class="section-subtitle">For direct inquiries, security disclosures, or corrections, email: <a href="mailto:tmsnsecure@gmail.com">tmsnsecure@gmail.com</a></p>
           </div>
 
           <div class="intro-card" style="margin-top:16px;">
@@ -117,23 +118,31 @@
         <section>
           <div class="intro-card">
             <h3>Send a Message</h3>
-            <form id="contactForm" class="contact-form" aria-label="Contact form">
+            <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+              
+              <!-- Web3Forms Access Key -->
+              <input type="hidden" name="access_key" value="60690491-25ab-4835-9541-3ef685ac73a3">
+
+              <!-- Email Subject (What you see in Gmail) -->
+              <input type="hidden" name="subject" value="New Contact Message from SN Security Website">
+
+              <!-- Prevent Spam -->
+              <input type="checkbox" name="botcheck" style="display:none;">
+
               <label for="name">Name</label>
               <input id="name" name="name" type="text" required placeholder="Your name">
 
               <label for="email">Email</label>
               <input id="email" name="email" type="email" required placeholder="you@example.com">
 
-              <label for="subject">Subject</label>
-              <input id="subject" name="subject" type="text" placeholder="Subject">
-
               <label for="message">Message</label>
-              <textarea id="message" name="message" rows="6" required placeholder="Tell us about your suggestion or issue"></textarea>
+              <textarea id="message" name="message" rows="6" required placeholder="Your message"></textarea>
 
-              <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
-                <button type="submit" class="btn btn-primary">Send Message</button>
-                <span id="contactStatus" style="color:var(--text-secondary);" aria-live="polite"></span>
-              </div>
+              <button type="submit" class="btn btn-primary">Send Message</button>
+
+              <p class="success-message" style="display:none; color:#00ff9d;">Message Sent Successfully ✔</p>
+              <p class="error-message" style="display:none; color:#ff5555;">Failed! Try Again ❌</p>
+
             </form>
           </div>
         </section>
@@ -155,6 +164,7 @@
             <div class="footer-logo">
               <a href="index.html" class="footer-home" aria-label="SN Security Home">
                 <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="eager">
+                  <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
                 <span>SN Security</span>
               </a>
             </div>
@@ -185,7 +195,7 @@
             </div>
           </div>
           <div class="footer-section">
-            <h4>Quick Links</h4>
+            <h3>Quick Links</h3>
             <ul class="footer-links">
               <li><a href="index.html">Home</a></li>
               <li><a href="roadmap.html">Roadmap</a></li>
@@ -194,7 +204,7 @@
             </ul>
           </div>
           <div class="footer-section">
-            <h4>Resources</h4>
+            <h3>Resources</h3>
             <ul class="footer-links">
               <li><a href="ctf-news.html">CTF & News</a></li>
               <li><a href="about.html">About Us</a></li>
@@ -202,7 +212,7 @@
             </ul>
           </div>
           <div class="footer-section">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <ul class="footer-links">
               <li><a href="#">Privacy Policy</a></li>
               <li><a href="#">Terms of Service</a></li>
@@ -217,35 +227,33 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></noscript>
     <script>
-    (function(){
-      const form = document.getElementById('contactForm');
-      const status = document.getElementById('contactStatus');
-      const endpoint = '';
-      if(!form) return;
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        status.textContent = 'Sending...';
-        const data = { name: form.name.value, email: form.email.value, subject: form.subject.value, message: form.message.value };
-        try{
-          if(endpoint){
-            const res = await fetch(endpoint, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-            if(res.ok){ status.textContent = 'Message sent — thank you!'; form.reset(); }
-            else { status.textContent = 'Error sending message.'; }
-          } else {
-            const mailto = `mailto:security@example.com?subject=${encodeURIComponent(data.subject||'Contact from website')}&body=${encodeURIComponent('Name: '+data.name+'\nEmail: '+data.email+'\n\n'+data.message)}`;
-            window.location.href = mailto;
-            status.textContent = '';
-          }
-        } catch(err){ console.error(err); status.textContent = 'Failed to send — please email security@example.com'; }
+    document.querySelector("form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+      })
+      .then(() => {
+        form.reset();
+        document.querySelector(".success-message").style.display = "block";
+        setTimeout(() => {
+          document.querySelector(".success-message").style.display = "none";
+        }, 4000);
+      })
+      .catch(() => {
+        document.querySelector(".error-message").style.display = "block";
       });
-    })();
+    });
     </script>
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
   </body>
   </html>
 

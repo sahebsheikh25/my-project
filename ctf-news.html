@@ -88,20 +88,20 @@
     <div class="nav-container">
       <div class="nav-logo">
         <a href="/index.html" class="nav-home" aria-label="SN Security Home">
-          <img src="assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
+          <img src="/assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
           <span>SN Security</span>
         </a>
       </div>
       <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
       <ul class="nav-menu" id="navMenu">
-        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="/index.html" class="nav-link">Home</a></li>
         <li><a href="/roadmap.html" class="nav-link">Roadmap</a></li>
-        <li><a href="tools.html" class="nav-link">Tools</a></li>
-        <li><a href="tech-store.html" class="nav-link">Store</a></li>
-        <li><a href="ctf-news.html" class="nav-link active">CTF & News</a></li>
-        <li><a href="osint.html" class="nav-link">OSINT</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="/tools.html" class="nav-link">Tools</a></li>
+        <li><a href="/tech-store.html" class="nav-link">Store</a></li>
+        <li><a href="/ctf-news.html" class="nav-link active">CTF & News</a></li>
+        <li><a href="/osint.html" class="nav-link">OSINT</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/contact.html" class="nav-link">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -209,8 +209,8 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <a href="index.html" class="footer-home" aria-label="SN Security Home">
-                            <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
+                        <a href="/index.html" class="footer-home" aria-label="SN Security Home">
+                          <img src="/assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
                             <span>SN Security</span>
                         </a>
                     </div>
@@ -243,11 +243,11 @@
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="/roadmap.html">Roadmap</a></li>
-                        <li><a href="tools.html">Tools</a></li>
-                        <li><a href="osint.html">OSINT</a></li>
-                    </ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/roadmap.html">Roadmap</a></li>
+                    <li><a href="/tools.html">Tools</a></li>
+                    <li><a href="/osint.html">OSINT</a></li>
+                  </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Resources</h3>
@@ -305,21 +305,22 @@
     async function fetchNews(){
       const list = document.getElementById('newsList');
       list.innerHTML = '<p style="color:var(--text-secondary)">Loading latest tech news…</p>';
-      const endpoint = `https://newsapi.org/v2/top-headlines?category=technology&language=en&pageSize=8&apiKey=${NEWS_API_KEY}`;
+      const endpoint = 'https://newsapi.org/v2/top-headlines?category=technology&language=en&pageSize=8&apiKey=' + NEWS_API_KEY;
       try{
         const resp = await fetch(endpoint);
         if(!resp.ok) throw new Error('Fetch error ' + resp.status);
         const data = await resp.json();
         if(!data.articles || !data.articles.length) throw new Error('No articles');
         list.innerHTML = '';
-        data.articles.forEach(a => {
-          const card = document.createElement('div'); card.className='news-card';
-          const thumb = a.urlToImage ? `<div class=\"news-thumb\" style=\"background-image:url(${a.urlToImage});background-size:cover;background-position:center\"></div>` : '<div class="news-thumb"></div>';
-          const published = a.publishedAt ? new Date(a.publishedAt).toLocaleString() : '';
-          const desc = a.description ? `<p>${a.description}</p>` : '';
-          card.innerHTML = `${thumb}<div class=\"news-meta\"><h4>${escapeHtml(a.title)}</h4><p>${escapeHtml(a.source.name)} · ${escapeHtml(published)}</p>${desc}<p style=\"margin-top:8px\"><a class=\"btn btn-secondary\" href=\"${a.url}\" target=\"_blank\">Read more</a></p></div>`;
-          list.appendChild(card);
-        });
+        
+          data.articles.forEach(a => {
+            const card = document.createElement('div'); card.className='news-card';
+            const thumb = a.urlToImage ? '<div class="news-thumb" style="background-image:url(' + escapeHtml(a.urlToImage) + ');background-size:cover;background-position:center"></div>' : '<div class="news-thumb"></div>';
+            const published = a.publishedAt ? new Date(a.publishedAt).toLocaleString() : '';
+            const desc = a.description ? '<p>' + escapeHtml(a.description) + '</p>' : '';
+            card.innerHTML = thumb + '<div class="news-meta"><h4>' + escapeHtml(a.title) + '</h4><p>' + escapeHtml(a.source.name) + ' · ' + escapeHtml(published) + '</p>' + desc + '<p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(a.url) + '" target="_blank">Read more</a></p></div>';
+            list.appendChild(card);
+          });
       }catch(err){
         console.warn('News fetch failed:', err);
         // Fallback: show a few static items
@@ -330,7 +331,7 @@
         list.innerHTML = '';
         fallback.forEach(n => {
           const card = document.createElement('div'); card.className='news-card';
-          card.innerHTML = `<div class=\"news-thumb\"></div><div class=\"news-meta\"><h4>${escapeHtml(n.title)}</h4><p>${escapeHtml(n.src)} · ${escapeHtml(n.published)}</p><p>${escapeHtml(n.description)}</p><p style=\"margin-top:8px\"><a class=\"btn btn-secondary\" href=\"${n.url}\" target=\"_blank\">Read more</a></p></div>`;
+          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(n.url) + '" target="_blank">Read more</a></p></div>';
           list.appendChild(card);
         });
       }
@@ -405,7 +406,7 @@
           const label = status === 'live' ? '🔴 LIVE' : '🟡 UPCOMING';
           const name = ev.name || ev.platform || 'CTF';
           const date = ev.start_date ? ev.start_date : 'TBD';
-          return `<span class="ticker-item"><span class="badge ${status}">${label}</span> <a href="${ev.reg_url||'#'}" target="_blank" rel="noopener noreferrer">${escapeHtml(name)}</a> — <small>${escapeHtml(date)}</small></span>`;
+          return '<span class="ticker-item"><span class="badge ' + status + '">' + label + '</span> <a href="' + (ev.reg_url||'#') + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(name) + '</a> — <small>' + escapeHtml(date) + '</small></span>';
         }).join(' ');
         // duplicate content for smooth scrolling if short
         tickerEl.innerHTML = items + ' ' + items;
@@ -482,22 +483,20 @@
             const end = ev.end_date || '';
             const status = eventStatus(ev);
             const badgeLabel = status === 'live' ? 'LIVE' : 'UPCOMING';
-            const dateDisplay = end ? `${escapeHtml(start)} — ${escapeHtml(end)}` : escapeHtml(start);
+            const dateDisplay = end ? (escapeHtml(start) + ' — ' + escapeHtml(end)) : escapeHtml(start);
             const reg = ev.reg_url || '#';
-            card.innerHTML = `
-              <div style="display:flex;justify-content:space-between;align-items:start;gap:8px">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span class="badge ${status.toLowerCase()}">${badgeLabel}</span>
-                  <div class="event-logo">${escapeHtml(logo)}</div>
-                </div>
-              </div>
-              <div class="event-meta">
-                <h4>${escapeHtml(ev.name)}</h4>
-                <div class="event-row"><span>Mode: ${escapeHtml(ev.mode || 'Online')}</span><span>Difficulty: ${escapeHtml(ev.difficulty || 'Varies')}</span></div>
-                <div class="event-dates"><strong>Dates:</strong> ${dateDisplay}</div>
-              </div>
-              <div style="display:flex;justify-content:flex-end;margin-top:8px"><a class="event-cta" href="${reg}" target="_blank" rel="noopener noreferrer">Register</a></div>
-            `;
+            card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:start;gap:8px">'
+              + '<div style="display:flex;align-items:center;gap:8px">'
+                + '<span class="badge ' + status.toLowerCase() + '">' + badgeLabel + '</span>'
+                + '<div class="event-logo">' + escapeHtml(logo) + '</div>'
+              + '</div>'
+            + '</div>'
+            + '<div class="event-meta">'
+                + '<h4>' + escapeHtml(ev.name) + '</h4>'
+                + '<div class="event-row"><span>Mode: ' + escapeHtml(ev.mode || 'Online') + '</span><span>Difficulty: ' + escapeHtml(ev.difficulty || 'Varies') + '</span></div>'
+                + '<div class="event-dates"><strong>Dates:</strong> ' + dateDisplay + '</div>'
+            + '</div>'
+            + '<div style="display:flex;justify-content:flex-end;margin-top:8px"><a class="event-cta" href="' + reg + '" target="_blank" rel="noopener noreferrer">Register</a></div>';
             grid.appendChild(card);
           });
       }

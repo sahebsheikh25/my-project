@@ -300,16 +300,20 @@
     })();
     
 
-    // Fetch tech news from NewsAPI (fallback to sample data if fetch fails)
-    const NEWS_API_KEY = '0fe0e3b962aa4f41bc8367ce04dec796';
+    // Fetch tech news via serverless proxy (keeps API key secret)
     async function fetchNews(){
       const list = document.getElementById('newsList');
       list.innerHTML = '<p style="color:var(--text-secondary)">Loading latest tech news…</p>';
-      const endpoint = 'https://newsapi.org/v2/top-headlines?category=technology&language=en&pageSize=8&apiKey=' + NEWS_API_KEY;
+      const endpoint = '/api/news';
       try{
         const resp = await fetch(endpoint);
-        if(!resp.ok) throw new Error('Fetch error ' + resp.status);
-        const data = await resp.json();
+        let bodyText = '';
+        try { bodyText = await resp.text(); } catch(_) { bodyText = ''; }
+        if(!resp.ok){
+          console.warn('News proxy returned', resp.status, bodyText);
+          throw new Error('Fetch error ' + resp.status + ' - ' + (bodyText||'<no body>'));
+        }
+        const data = JSON.parse(bodyText || '{}');
         if(!data.articles || !data.articles.length) throw new Error('No articles');
         list.innerHTML = '';
         

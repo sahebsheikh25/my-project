@@ -267,7 +267,7 @@ body {
 }
 
 .tools-hero::before {
-    content: '';
+    content: ''; 
     position: absolute;
     top: 0;
     left: 0;
@@ -846,6 +846,25 @@ section {
     }
 }
 
+/* ===== Contact Page Responsive Tweaks ===== */
+/* Ensure two-column contact layout collapses cleanly and buttons/inputs fill width on small screens */
+main.container { padding: 48px 20px; }
+.contact-grid { align-items: start; }
+
+@media (max-width: 880px) {
+    main.container { padding: 28px 12px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 18px; }
+    .contact-grid aside, .contact-grid section { width: 100%; }
+    .contact-grid .intro-card { margin: 0; padding: 16px; }
+    .contact-form .btn, .intro-card .btn { width: 100%; display: block; }
+    .contact-form input, .contact-form textarea { font-size: 1rem; }
+}
+
+@media (max-width: 420px) {
+    main.container { padding: 18px 10px; }
+    .hero-title { font-size: 2rem; }
+}
+
 /* ===== Custom Scrollbar ===== */
 ::-webkit-scrollbar {
     width: 10px;
@@ -1020,77 +1039,4 @@ section {
     color: #000;
     transform: translateY(-5px);
     box-shadow: 0 0 20px #00ff9d;
-}
-
-/* ===== Contact Page Responsive Tweaks (root CSS) ===== */
-main.container { padding: 48px 20px; }
-.contact-grid { align-items: start; }
-
-@media (max-width: 880px) {
-    main.container { padding: 28px 12px; }
-    .contact-grid { grid-template-columns: 1fr; gap: 18px; }
-    .contact-grid aside, .contact-grid section { width: 100%; }
-    .contact-grid .intro-card { margin: 0; padding: 16px; }
-    .contact-form .btn, .intro-card .btn { width: 100%; display: block; }
-    .contact-form input, .contact-form textarea { font-size: 1rem; }
-}
-
-@media (max-width: 420px) {
-    main.container { padding: 18px 10px; }
-    .hero-title { font-size: 2rem; }
-}
-
-/* ===== SIMPLE CTF MOVING TEXT ===== */
-.ctf-marquee{
-  width: 100%;
-  overflow: hidden;
-  background: linear-gradient(90deg, rgba(0,255,178,0.08), rgba(0,200,255,0.03));
-  border-top: 1px solid rgba(0,255,178,0.25);
-  border-bottom: 1px solid rgba(0,255,178,0.25);
-  padding: 10px 0;
-}
-
-.ctf-marquee-track{
-  display: inline-block;
-  white-space: nowrap;
-  animation: marquee-left 35s linear infinite;
-}
-
-.ctf-marquee-item{
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  color: #bfffee;
-}
-
-.ctf-marquee-item a{
-  color: #00ffb2;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.ctf-marquee-item a:hover{
-  text-decoration: underline;
-}
-
-/* blinking red dot */
-.ctf-marquee-item::before{
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background: #ff4d4f;
-  box-shadow: 0 0 8px #ff4d4f;
-  animation: blink 1.2s infinite;
-}
-
-@keyframes marquee-left{
-  from{ transform: translateX(100%); }
-  to{ transform: translateX(-100%); }
-}
-
-@keyframes blink{
-  0%,100%{opacity:1}
-  50%{opacity:0.3}
 }

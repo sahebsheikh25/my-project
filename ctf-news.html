@@ -17,18 +17,41 @@
     .ctf-hero .hero-content{position:relative;z-index:2;text-align:center;max-width:1100px}
     .hero-sub{color:var(--text-secondary);margin-top:8px}
 
-    /* Events grid */
-    .events-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:18px}
-    .event-card{background:linear-gradient(180deg, rgba(6,12,22,0.6), rgba(4,10,18,0.6));border:1px solid rgba(0,255,178,0.06);padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center}
-    .event-logo{width:64px;height:64px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent-secondary)}
-    .event-meta{flex:1}
-    .event-meta h4{margin:0 0 6px;font-family:var(--font-heading);color:var(--accent-primary)}
-    .event-row{display:flex;gap:12px;flex-wrap:wrap;color:var(--text-secondary);font-size:0.95rem}
+
+    /* Events grid: show four square cards on desktop */
+    .events-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .event-card{background:linear-gradient(180deg, rgba(6,12,22,0.6), rgba(4,10,18,0.6));border:1px solid rgba(0,255,178,0.06);padding:10px;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:10px;aspect-ratio:1/1;min-height:0}
+    .event-logo{width:56px;height:56px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent-secondary);font-family:var(--font-heading);font-size:1rem}
+    .event-meta{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:8px}
+    .event-meta h4{margin:0;font-family:var(--font-heading);color:var(--accent-primary);font-size:1rem}
+    .event-row{display:flex;gap:8px;flex-wrap:wrap;color:var(--text-secondary);font-size:0.92rem}
+    .event-dates{color:var(--text-secondary);font-size:0.92rem;margin-top:6px}
     .event-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(90deg,#00ffa2,#00c2ff);color:#021017;border-radius:10px;font-weight:800;text-decoration:none}
 
-    /* Platforms */
-    .platforms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
-    .platform-card{background:var(--bg-card);border:1px solid var(--border-color);padding:12px;border-radius:10px;text-align:left}
+    /* Ticker */
+    .ctf-ticker{overflow:hidden;border-radius:8px;background:linear-gradient(90deg,rgba(0,0,0,0.12),rgba(0,0,0,0.04));padding:8px;margin-top:12px;border:1px solid rgba(255,255,255,0.02)}
+    .ctf-ticker .ticker-track{display:inline-block;white-space:nowrap;will-change:transform;animation:scroll-left linear infinite}
+    .ctf-ticker .ticker-item{display:inline-flex;align-items:center;gap:10px;margin-right:28px;color:var(--text-secondary)}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:800;font-size:0.75rem}
+    .badge.live{background:#ff4d4f;color:#fff}
+    .badge.upcoming{background:#ffd166;color:#021017}
+
+    @keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)} }
+
+    /* Mobile: make events horizontally swipeable */
+    @media (max-width:900px){
+      .events-grid{display:flex;flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;gap:12px;scroll-snap-type:x mandatory}
+      .event-card{min-width:240px;flex:0 0 auto;scroll-snap-align:center}
+      .platforms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .ctf-ticker .ticker-track{animation-duration:20s}
+    }
+    @media (min-width:901px){
+      .ctf-ticker .ticker-track{animation-duration:36s}
+    }
+
+    /* Platforms: four square cards, same shape as events */
+    .platforms-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+    .platform-card{background:linear-gradient(180deg, rgba(3,10,18,0.6), rgba(6,14,26,0.6));border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;aspect-ratio:1/1;text-align:center}
     .platform-card small{color:var(--text-secondary);display:block;margin-top:8px}
 
     /* News feed */
@@ -50,6 +73,11 @@
     .daily-tip{background:linear-gradient(90deg, rgba(0,255,178,0.03), rgba(0,200,255,0.02));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--text-secondary)}
 
     @media (max-width:900px){.news-feed{grid-template-columns:1fr}.ctf-hero{padding-top:140px}}
+    /* Footer social icon shapes + accessibility helper */
+    .footer-social{display:flex;gap:8px;align-items:center}
+    .footer-social .social-link{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:var(--text-primary);text-decoration:none;font-weight:700}
+    .footer-social .social-link:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.25)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
@@ -89,51 +117,39 @@
     </div>
   </section>
 
+  <div class="ctf-marquee">
+  <div class="ctf-marquee-track">
+    <span class="ctf-marquee-item">
+      🔴 <strong>Register Now:</strong>
+      <a href="https://www.hackwithindia.com/" target="_blank">
+        Hack With India CTF
+      </a>
+      —  on <strong> 1 7 January 2026 Online Event</strong>
+    </span>
+  </div>
+</div>
+
   <main class="container">
     <section id="events" class="section-block">
       <h2 class="section-title">Live / Upcoming CTF Events</h2>
       <p class="section-sub">Event Logo • CTF Name • Mode • Difficulty • Date • Join</p>
-      <div class="events-grid">
-        <div class="event-card">
-          <div class="event-logo">HTB</div>
-          <div class="event-meta">
-            <h4>Hack The Box — Weekly Challenge</h4>
-            <div class="event-row">
-              <span>Mode: Online</span>
-              <span>Difficulty: Intermediate</span>
-              <span>Date: Ongoing</span>
-            </div>
-          </div>
-          <a class="event-cta" href="https://www.hackthebox.com/" target="_blank">Join</a>
-        </div>
-
-        <div class="event-card">
-          <div class="event-logo">THM</div>
-          <div class="event-meta">
-            <h4>TryHackMe — Advent of Cyber</h4>
-            <div class="event-row">
-              <span>Mode: Online</span>
-              <span>Difficulty: Beginner–Pro</span>
-              <span>Date: Dec (annual)</span>
-            </div>
-          </div>
-          <a class="event-cta" href="https://tryhackme.com/" target="_blank">Join</a>
-        </div>
-
-        <div class="event-card">
-          <div class="event-logo">CTF</div>
-          <div class="event-meta">
-            <h4>CTFTime — Global Rankings</h4>
-            <div class="event-row">
-              <span>Mode: Listings</span>
-              <span>Difficulty: Varies</span>
-              <span>Date: Rolling</span>
-            </div>
-          </div>
-          <a class="event-cta" href="https://ctftime.org/" target="_blank">View</a>
-        </div>
-
+      <div class="ctf-ticker" aria-hidden="false"><div class="ticker-track" id="ctfTicker"></div></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">
+        <input id="ctfSearch" type="search" placeholder="Search CTFs, platforms, tags..." style="flex:1;min-width:180px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);color:var(--text-primary)">
+        <select id="ctfFilter" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);color:var(--text-primary)">
+          <option value="all">All regions</option>
+          <option value="global">Global</option>
+          <option value="asia">Asia</option>
+          <option value="eu">Europe</option>
+          <option value="na">North America</option>
+        </select>
+        <button id="ctfRefresh" class="btn btn-light">Refresh</button>
       </div>
+
+      <div class="events-grid" id="eventsGrid" aria-live="polite">
+        <!-- Events loaded from /ctf-events.json and external sources -->
+      </div>
+      
     </section>
 
     <section class="section-block">
@@ -143,7 +159,7 @@
         <div class="platform-card"><strong>TryHackMe</strong><small>Beginner–Pro — Guided rooms & pathways</small><a class="btn btn-secondary" href="https://tryhackme.com/">🔗 Start</a></div>
         <div class="platform-card"><strong>Root-Me</strong><small>Intermediate — Wide practice catalog</small><a class="btn btn-secondary" href="https://www.root-me.org/">🔗 Start</a></div>
         <div class="platform-card"><strong>picoCTF</strong><small>Students — Beginner competitions</small><a class="btn btn-secondary" href="https://picoctf.org/">🔗 Start</a></div>
-        <div class="platform-card"><strong>VulnHub</strong><small>Advanced — Offline vulnerable VMs</small><a class="btn btn-secondary" href="https://www.vulnhub.com/">🔗 Start</a></div>
+        <!-- Removed extra platform to keep a clean 4-card layout -->
       </div>
     </section>
 
@@ -189,47 +205,72 @@
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <div class="footer-logo">
-            <a href="index.html" class="footer-home" aria-label="SN Security Home">
-              <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
-              <span>SN Security</span>
-            </a>
-          </div>
-          <p class="footer-tagline">Learn Hacking. Secure Future.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <a href="index.html" class="footer-home" aria-label="SN Security Home">
+                            <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
+                            <span>SN Security</span>
+                        </a>
+                    </div>
+                    <p class="footer-tagline">Learn Hacking. Secure Future.</p>
+                    <div class="social-links">
+                        <a href="https://x.com/" class="social-link" aria-label="Twitter" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/sahebsheikh25" class="social-link" aria-label="GitHub" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/sahebsheikh/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+                                <circle cx="4" cy="4" r="2"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="roadmap.html">Roadmap</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="osint.html">OSINT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="ctf-news.html">CTF & News</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SN Security. All rights reserved. | Designed for ethical hacking education.</p>
+            </div>
         </div>
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="roadmap.html">Roadmap</a></li>
-            <li><a href="tools.html">Tools</a></li>
-            <li><a href="osint.html">OSINT</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Resources</h3>
-          <ul class="footer-links">
-            <li><a href="ctf-news.html">CTF & News</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Legal</h3>
-          <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 SN Security. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
   <script>
     // Simple Matrix animation for the hero background
@@ -257,6 +298,7 @@
       }
       setInterval(draw, 80);
     })();
+    
 
     // Fetch tech news from NewsAPI (fallback to sample data if fetch fails)
     const NEWS_API_KEY = '0fe0e3b962aa4f41bc8367ce04dec796';
@@ -310,6 +352,166 @@
     function rotateTip(){document.getElementById('dailyTip').textContent = tips[tipIdx]; tipIdx = (tipIdx+1)%tips.length}
     setInterval(rotateTip, 24*60*60*1000); // daily
     rotateTip();
+
+    // Helper: parse date strings to comparable timestamps; treat TBD/Ongoing as far-future
+    function parseDateForSort(s){
+      if(!s) return 9e15; // far future
+      const norm = String(s).trim().toLowerCase();
+      if(norm === 'tbd' || norm === 'ongoing' || norm === 'tba') return 9e15;
+      const t = Date.parse(s);
+      return isNaN(t) ? 9e15 : t;
+    }
+
+    // Determine status relative to today
+    function eventStatus(ev){
+      const today = Date.now();
+      const start = ev.start_date && Date.parse(ev.start_date);
+      const end = ev.end_date && Date.parse(ev.end_date);
+      if((ev.start_date && String(ev.start_date).toLowerCase()==='ongoing') || (start && !end && start <= today)) return 'live';
+      if(start && end && start <= today && today <= end) return 'live';
+      if(start && start > today) return 'upcoming';
+      return 'upcoming';
+    }
+
+    // Load CTF events from JSON and render into events grid
+    async function loadCTFEvents(){
+      const grid = document.getElementById('eventsGrid');
+      const search = document.getElementById('ctfSearch');
+      const filter = document.getElementById('ctfFilter');
+      grid.innerHTML = '<p style="color:var(--text-secondary)">Loading events…</p>';
+      let events = [];
+      try{
+        const res = await fetch('/ctf-events.json');
+        if(!res.ok) throw new Error('no json');
+        events = await res.json();
+      }catch(e){
+        console.warn('Could not load /ctf-events.json, using fallback', e);
+        events = [];
+      }
+
+      // sort events: live first, then upcoming by nearest start date
+      events.sort((a,b)=>{
+        const sa = eventStatus(a) === 'live' ? -1 : (eventStatus(a) === 'upcoming' ? 0 : 1);
+        const sb = eventStatus(b) === 'live' ? -1 : (eventStatus(b) === 'upcoming' ? 0 : 1);
+        if(sa !== sb) return sa - sb;
+        return parseDateForSort(a.start_date) - parseDateForSort(b.start_date);
+      });
+
+      // populate ticker with live/upcoming items
+      const tickerEl = document.getElementById('ctfTicker');
+      if(tickerEl){
+        const items = events.map(ev => {
+          const status = eventStatus(ev);
+          const label = status === 'live' ? '🔴 LIVE' : '🟡 UPCOMING';
+          const name = ev.name || ev.platform || 'CTF';
+          const date = ev.start_date ? ev.start_date : 'TBD';
+          return `<span class="ticker-item"><span class="badge ${status}">${label}</span> <a href="${ev.reg_url||'#'}" target="_blank" rel="noopener noreferrer">${escapeHtml(name)}</a> — <small>${escapeHtml(date)}</small></span>`;
+        }).join(' ');
+        // duplicate content for smooth scrolling if short
+        tickerEl.innerHTML = items + ' ' + items;
+      }
+
+      function matches(q, ev){
+        if(!q) return true;
+        q = q.toLowerCase();
+        return (ev.name && ev.name.toLowerCase().includes(q)) || (ev.platform && ev.platform.toLowerCase().includes(q)) || (ev.tags && ev.tags.join(' ').toLowerCase().includes(q));
+      }
+
+      function renderList(){
+        const q = search.value.trim();
+        const region = filter.value;
+        grid.innerHTML = '';
+          const filtered = events.filter(ev => (region==='all' || ev.region===region || (region==='global' && ev.region==='global')) && matches(q, ev));
+          // Ensure exactly four cards are shown. If fewer events, repeat the first event or show placeholders.
+          let toShow = [];
+          if(filtered.length >= 4){
+            toShow = filtered.slice(0,4);
+          } else if(filtered.length > 0){
+            for(let i=0;i<4;i++) toShow.push(filtered[i % filtered.length]);
+          } else {
+          
+  toShow = [
+    {
+      name: 'Hack with India',
+      platform: 'HackWithIndia',
+      logo: 'HWI',
+      mode: 'Online',
+      difficulty: 'Beginner',
+      start_date: '2026-02-10',
+      end_date: '2026-02-11',
+      reg_url: 'https://www.hackwithindia.com/'
+    },
+    {
+      name: 'HackWithIndia – Winter CTF',
+      platform: 'HackWithIndia',
+      logo: 'HWI',
+      mode: 'Online',
+      difficulty: 'All Levels',
+      start_date: '2026-03-05',
+      end_date: '2026-03-07',
+      reg_url: 'https://www.hackwithindia.com/'
+    },
+    {
+      name: 'Hack The Box – Weekly',
+      platform: 'HTB',
+      logo: 'HTB',
+      mode: 'Online',
+      difficulty: 'Intermediate',
+      start_date: 'Ongoing',
+      end_date: '',
+      reg_url: 'https://www.hackthebox.com/'
+    },
+    {
+      name: 'TryHackMe – Advent of Cyber',
+      platform: 'THM',
+      logo: 'THM',
+      mode: 'Online',
+      difficulty: 'Beginner–Pro',
+      start_date: '',
+      end_date: '',
+      reg_url: 'https://tryhackme.com/'
+    }
+  ];
+}
+
+
+          toShow.forEach(ev => {
+            const card = document.createElement('div'); card.className='event-card';
+            const logo = ev.logo || (ev.platform||'CTF').slice(0,3).toUpperCase();
+            const start = ev.start_date || ev.date || 'TBD';
+            const end = ev.end_date || '';
+            const status = eventStatus(ev);
+            const badgeLabel = status === 'live' ? 'LIVE' : 'UPCOMING';
+            const dateDisplay = end ? `${escapeHtml(start)} — ${escapeHtml(end)}` : escapeHtml(start);
+            const reg = ev.reg_url || '#';
+            card.innerHTML = `
+              <div style="display:flex;justify-content:space-between;align-items:start;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span class="badge ${status.toLowerCase()}">${badgeLabel}</span>
+                  <div class="event-logo">${escapeHtml(logo)}</div>
+                </div>
+              </div>
+              <div class="event-meta">
+                <h4>${escapeHtml(ev.name)}</h4>
+                <div class="event-row"><span>Mode: ${escapeHtml(ev.mode || 'Online')}</span><span>Difficulty: ${escapeHtml(ev.difficulty || 'Varies')}</span></div>
+                <div class="event-dates"><strong>Dates:</strong> ${dateDisplay}</div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:8px"><a class="event-cta" href="${reg}" target="_blank" rel="noopener noreferrer">Register</a></div>
+            `;
+            grid.appendChild(card);
+          });
+      }
+
+      // wire search/filter
+      search.addEventListener('input', () => renderList());
+      filter.addEventListener('change', () => renderList());
+      document.getElementById('ctfRefresh').addEventListener('click', () => loadCTFEvents());
+
+      renderList();
+    }
+
+    // init events after page load
+    setTimeout(loadCTFEvents, 500);
   </script>
 </body>
 </html>

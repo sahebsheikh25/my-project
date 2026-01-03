@@ -1,0 +1,24 @@
+[
+	{
+		"name": "Hack With India CTF",
+		"platform": "HackWithIndia",
+		"logo": "HWI",
+		"mode": "Online",
+		"difficulty": "All Levels",
+		"start_date": "2026-01-17",
+		"end_date": "2026-01-18",
+		"reg_url": "https://www.hackwithindia.com/",
+		"region": "global"
+	},
+	{
+		"name": "TryHackMe Advent",
+		"platform": "TryHackMe",
+		"logo": "THM",
+		"mode": "Online",
+		"difficulty": "Beginner–Pro",
+		"start_date": "2026-12-01",
+		"end_date": "2026-12-31",
+		"reg_url": "https://tryhackme.com/",
+		"region": "global"
+	}
+]

@@ -402,8 +402,28 @@
       let events = [];
       try{
         const res = await fetch('/ctf-events.json');
-        if(!res.ok) throw new Error('no json');
-        events = await res.json();
+        let bodyText = '';
+        try{ bodyText = await res.text(); } catch(_) { bodyText = ''; }
+        if(!res.ok){
+          console.warn('ctf-events.json fetch error', res.status, bodyText);
+          throw new Error('no json');
+        }
+        if(!bodyText || !bodyText.trim()){
+          // empty file — avoid JSON.parse throwing
+          console.warn('ctf-events.json is empty, falling back to defaults');
+          events = [];
+        } else {
+          try{
+            events = JSON.parse(bodyText);
+            if(!Array.isArray(events)) {
+              console.warn('ctf-events.json is not an array, using fallback');
+              events = [];
+            }
+          }catch(err){
+            console.warn('Invalid JSON in /ctf-events.json, using fallback', err, bodyText);
+            events = [];
+          }
+        }
       }catch(e){
         console.warn('Could not load /ctf-events.json, using fallback', e);
         events = [];

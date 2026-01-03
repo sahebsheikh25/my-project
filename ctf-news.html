@@ -84,16 +84,34 @@
     .ctf-notice a{display:inline-block;padding:6px 12px;font-weight:800;color:#9ef0ff;text-decoration:none;font-family:var(--font-heading,'Rajdhani',system-ui);font-size:0.96rem;border-radius:6px;text-shadow:0 0 16px rgba(158,240,255,0.95)}
     .ctf-notice a:hover{filter:brightness(1.04);text-decoration:underline}
     @keyframes marquee-ctf{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-      /* Top notification banner - single-line text alert with inline link */
-      .top-marquee-ctf{width:100%;position:relative;overflow:hidden;padding:6px 0;background:transparent;z-index:1000;margin-bottom:12px}
-      .top-marquee-ctf .marquee-inner{display:inline-flex;align-items:center;gap:56px;white-space:nowrap;will-change:transform;animation:marquee-ctf 40s linear infinite}
-      .top-marquee-ctf .marquee-link{font-weight:700;font-family:var(--font-heading,'Rajdhani',system-ui);font-size:0.98rem;background:linear-gradient(90deg,#9ef0ff,#00ffa2,#ff66b3,#b28cff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:marqueeGradient 6s linear infinite;text-shadow:0 0 10px rgba(158,240,255,0.12);text-decoration:none;display:inline-block}
-      .top-marquee-ctf .marquee-link:focus{outline:2px solid rgba(158,240,255,0.12);outline-offset:4px}
-      .top-marquee-ctf .marquee-link:hover{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:rgba(158,240,255,0.9);filter:brightness(1.04);text-shadow:0 0 20px rgba(158,240,255,0.6)}
-      @keyframes marqueeGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-      @media (max-width:920px){.top-marquee-ctf .marquee-text{font-size:0.92rem} .top-marquee-ctf .marquee-inner{animation-duration:28s}}
-      @media (max-width:520px){.top-marquee-ctf .marquee-text{font-size:0.9rem;padding:0 8px;overflow:hidden;text-overflow:ellipsis} .top-marquee-ctf .marquee-inner{animation-duration:20s}}
-      @keyframes marquee-ctf{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+      /* Notification marquee (pure HTML + CSS)
+         - Pure CSS marquee using a CSS ::after duplication to create a seamless
+           loop without duplicating the clickable anchor in the DOM. The link
+           (the first anchor) remains the only interactive element.
+         - Separation of concerns: the marquee movement is a transform animation
+           on the track; the color-shift is a separate background-position
+           animation applied to the text via background-clip:text.
+         - Avoids 100vw to prevent horizontal scrollbars on mobile and ensures
+           consistent behavior on CDN deployments (Vercel) where fonts may load
+           asynchronously.
+      */
+      .notification-marquee{background:#031027;color:#9ef0ff;padding:10px 0;margin-bottom:12px;overflow:hidden}
+      .notification-marquee .marquee{overflow:hidden}
+      .notification-marquee .marquee__track{display:inline-flex;align-items:center;white-space:nowrap;gap:48px;will-change:transform;animation:marquee-scroll 36s linear infinite}
+      /* Duplicate text via pseudo-element (not duplicate DOM anchors) */
+      .notification-marquee .marquee__track::after{content:attr(data-text);display:inline-block;margin-left:48px}
+      /* Clickable text (only the first anchor is interactive) */
+      .notification-marquee .marquee__item{display:inline-block;font-family:Orbitron, 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, Arial; font-weight:700;font-size:1rem;line-height:1;color:transparent;background:linear-gradient(90deg,#00f0ff,#0066ff,#ff66b3,#00ff9f);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 12px rgba(0,240,255,0.06);text-decoration:none}
+      .notification-marquee .marquee__item:focus{outline:2px solid rgba(0,240,255,0.12);outline-offset:4px}
+      .notification-marquee .marquee__item:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px;text-decoration-color:rgba(158,240,255,0.9);filter:brightness(1.05);text-shadow:0 0 20px rgba(158,240,255,0.35)}
+      /* subtle color shimmer independent from movement */
+      .notification-marquee .marquee__item{animation:colorShift 6s linear infinite}
+      @keyframes colorShift{0%{background-position:0% 50%}25%{background-position:33% 50%}50%{background-position:66% 50%}75%{background-position:100% 50%}100%{background-position:0% 50%}}
+      /* Move the whole track left by half its width (since ::after mirrors content)
+         This creates a continuous loop without visual jumps. */
+      @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+      @media (max-width:920px){.notification-marquee .marquee__item{font-size:0.92rem}.notification-marquee .marquee__track{animation-duration:28s}}
+      @media (max-width:520px){.notification-marquee .marquee__item{font-size:0.86rem}.notification-marquee .marquee__track{animation-duration:20s}}
   </style>
 
 
@@ -136,17 +154,17 @@
     </section>
 
     <main class="container">
-    <div class="top-marquee-ctf" role="region" aria-label="Important notification">
-      <div class="marquee-inner" aria-hidden="false">
-        <a class="marquee-link" href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
-        <a class="marquee-link" aria-hidden="true" href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
-        <a class="marquee-link" aria-hidden="true" href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
-
-      </div>
-    </div>
 
     <section id="events" class="section-block">
       <h2 class="section-title">Live / Upcoming CTF Events</h2>
+      <div class="notification-marquee" role="region" aria-label="Important notification">
+        <div class="marquee">
+          <div class="marquee__track" data-text="🔴 Register for Hack With India — 17 January 2026 | Online Event.">
+            <a class="marquee__item" href="https://www.hackwithindia.com/" target="_blank" rel="noopener noreferrer">🔴 Register for Hack With India — 17 January 2026 | Online Event.</a>
+          </div>
+        </div>
+      </div>
+    
       <p class="section-sub">Event Logo • CTF Name • Mode • Difficulty • Date • Join</p>
       <div class="ctf-ticker" aria-hidden="false"><div class="ticker-track" id="ctfTicker"></div></div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">

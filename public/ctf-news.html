@@ -159,7 +159,7 @@
       </div>
 
       <div class="events-grid" id="eventsGrid" aria-live="polite">
-        <!-- Events loaded from /ctf-events.json and external sources -->
+        <!-- Events provided inline; no external JSON required -->
       </div>
       
     </section>
@@ -439,15 +439,50 @@
       const search = document.getElementById('ctfSearch');
       const filter = document.getElementById('ctfFilter');
       grid.innerHTML = '<p style="color:var(--text-secondary)">Loading events…</p>';
-      let events = [];
-      try{
-        const res = await fetch('/ctf-events.json');
-        if(!res.ok) throw new Error('no json');
-        events = await res.json();
-      }catch(e){
-        console.warn('Could not load /ctf-events.json, using fallback', e);
-        events = [];
-      }
+      // Built-in events (inline). No external events file required.
+      const builtInEvents = [
+        {
+          name: 'Hack with India',
+          platform: 'HackWithIndia',
+          logo: 'HWI',
+          mode: 'Online',
+          difficulty: 'Beginner',
+          start_date: '2026-02-10',
+          end_date: '2026-02-11',
+          reg_url: 'https://www.hackwithindia.com/'
+        },
+        {
+          name: 'HackWithIndia – Winter CTF',
+          platform: 'HackWithIndia',
+          logo: 'HWI',
+          mode: 'Online',
+          difficulty: 'All Levels',
+          start_date: '2026-03-05',
+          end_date: '2026-03-07',
+          reg_url: 'https://www.hackwithindia.com/'
+        },
+        {
+          name: 'Hack The Box – Weekly',
+          platform: 'HTB',
+          logo: 'HTB',
+          mode: 'Online',
+          difficulty: 'Intermediate',
+          start_date: 'Ongoing',
+          end_date: '',
+          reg_url: 'https://www.hackthebox.com/'
+        },
+        {
+          name: 'TryHackMe – Advent of Cyber',
+          platform: 'THM',
+          logo: 'THM',
+          mode: 'Online',
+          difficulty: 'Beginner–Pro',
+          start_date: '',
+          end_date: '',
+          reg_url: 'https://tryhackme.com/'
+        }
+      ];
+      let events = builtInEvents.slice();
 
       // sort events: live first, then upcoming by nearest start date
       events.sort((a,b)=>{

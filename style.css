@@ -467,7 +467,7 @@ section {
 }
 
 .intro-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     box-shadow: 0 10px 40px rgba(0, 255, 178, 0.2);
     border-color: var(--accent-primary);
 }
@@ -599,7 +599,7 @@ section {
     transition: opacity 0.36s ease, transform 0.6s cubic-bezier(.2,.9,.3,1);
 }
 .intro-card:hover, .event-card:hover, .platform-card:hover, .learn-card:hover, .feature-item:hover, .tool-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     box-shadow: 0 18px 50px rgba(0,255,178,0.08), 0 6px 18px rgba(0,0,0,0.25);
     border-color: var(--accent-primary);
 }
@@ -626,6 +626,53 @@ section {
 .intro-card:hover::before, .event-card:hover::before, .platform-card:hover::before, .learn-card:hover::before, .feature-item:hover::before, .tool-card:hover::before {
     transform: rotate(-18deg) translateX(20%);
     opacity: 0.7;
+}
+
+/* Neon color-shifting glow for cards (subtle, CSS-only, mobile-friendly) */
+@keyframes neonShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Apply to main card-like components. Keep animation subtle and GPU-friendly. */
+.intro-card, .event-card, .platform-card, .learn-card, .feature-item, .tool-card, .card, .news-card {
+    position: relative;
+    overflow: visible; /* allow glow to extend outside */
+    will-change: transform, box-shadow, opacity;
+}
+
+.intro-card::after, .event-card::after, .platform-card::after, .learn-card::after, .feature-item::after, .tool-card::after, .card::after, .news-card::after {
+    content: '';
+    position: absolute;
+    inset: -6px; /* expand slightly outside the card */
+    z-index: -1;
+    border-radius: inherit;
+    /* darker, subtle neon palette to preserve the dark theme */
+    background: linear-gradient(90deg, rgba(0,160,140,0.12), rgba(0,120,200,0.08), rgba(90,30,150,0.05));
+    background-size: 300% 300%;
+    filter: blur(12px) saturate(0.95);
+    opacity: 0.08;
+    transition: opacity 0.28s ease, transform 0.28s ease;
+    pointer-events: none;
+    animation: neonShift 8s linear infinite;
+}
+
+/* stronger glow on hover, and subtle lift (mobile-friendly) */
+.intro-card:hover::after, .event-card:hover::after, .platform-card:hover::after, .learn-card:hover::after, .feature-item:hover::after, .tool-card:hover::after, .card:hover::after, .news-card:hover::after {
+    opacity: 0.24; /* modest increase on hover, kept subtle */
+}
+
+/* Reduce motion & intensity on small screens for performance */
+@media (max-width: 520px) {
+    .intro-card::after, .event-card::after, .platform-card::after, .learn-card::after, .feature-item::after, .tool-card::after, .card::after, .news-card::after {
+        filter: blur(6px) saturate(0.95);
+        opacity: 0.12;
+        animation-duration: 12s;
+    }
+    .intro-card, .event-card, .platform-card, .learn-card, .feature-item, .tool-card, .card, .news-card {
+        padding: 14px; /* touch-friendly spacing if needed */
+    }
 }
 
 .feature-number {
@@ -1094,4 +1141,46 @@ main.container { padding: 48px 20px; }
 @keyframes blink{
   0%,100%{opacity:1}
   50%{opacity:0.3}
+}
+
+/* ===== Cursor Glow ===== */
+/* single DOM element (.cursor-glow) -- pointer-events:none so it never blocks clicks */
+.cursor-glow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 120px; /* slightly smaller to avoid brightening */
+    height: 120px;
+    pointer-events: none;
+    border-radius: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    z-index: 9999;
+    mix-blend-mode: normal; /* avoid lifting page brightness */
+    transition: opacity 360ms ease, transform 260ms cubic-bezier(.2,.9,.3,1), width 260ms ease, height 260ms ease;
+    opacity: 0; /* hidden by default */
+    will-change: transform, opacity;
+    background: radial-gradient(circle at 40% 35%, rgba(0,200,150,0.12) 0%, rgba(0,120,200,0.08) 30%, rgba(90,30,150,0.04) 60%, transparent 70%);
+    filter: blur(6px) saturate(0.95);
+}
+
+/* stronger, larger glow when hovering interactive elements */
+.cursor-glow.cursor-glow--strong {
+    width: 160px;
+    height: 160px;
+    opacity: 0.7;
+    background: radial-gradient(circle at 40% 35%, rgba(0,200,150,0.18) 0%, rgba(0,120,200,0.12) 30%, rgba(90,30,150,0.06) 60%, transparent 68%);
+    filter: blur(8px) saturate(0.98);
+}
+
+/* subtle color-shift (optional): keep duration long to reduce perceived motion */
+@keyframes cursorHue {
+    0% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(45deg); }
+    100% { filter: hue-rotate(0deg); }
+}
+.cursor-glow { animation: cursorHue 10s linear infinite; }
+
+/* Reduce motion for low-power or small screens */
+@media (pointer:coarse), (max-width:520px) {
+        .cursor-glow { display: none !important; }
 }

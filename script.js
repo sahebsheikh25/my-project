@@ -301,3 +301,102 @@ document.addEventListener('DOMContentLoaded', function () {
         else card.appendChild(actions);
     });
 });
+
+/* ===== Cursor glow: single-element, requestAnimationFrame-based follower =====
+   - Creates one `.cursor-glow` element appended to body
+   - Uses rAF to smoothly interpolate towards mouse position (lerp)
+   - Fades out after `idleFadeMs` of no movement
+   - Pointer-events are none so clicks/scroll are unaffected
+   - Automatically disabled on touch / coarse-pointer devices
+*/
+(function(){
+    if (typeof window === 'undefined') return;
+
+    // Disable on touch / coarse pointer devices
+    if (window.matchMedia && (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(any-pointer: coarse)').matches)) return;
+
+    const idleFadeMs = 400; // fade out after this many ms of no movement
+    const lerpFactor = 0.18; // smoothing factor (0..1)
+
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let curX = targetX;
+    let curY = targetY;
+    let visible = false;
+    let lastMove = 0;
+    let rafId = null;
+
+    // Update target position on pointermove (mouse)
+    function onMove(e){
+        // Use clientX/clientY for cursor position
+        targetX = e.clientX;
+        targetY = e.clientY;
+        lastMove = performance.now();
+        if (!visible) {
+            visible = true;
+            glow.style.opacity = '1';
+        }
+    }
+
+    // Hide when leaving viewport
+    function onLeave(){
+        visible = false;
+        glow.style.opacity = '0';
+    }
+
+    // Show again on enter
+    function onEnter(){
+        // keep hidden until movement
+    }
+
+    // Stronger glow when hovering interactive elements
+    const interactiveSelector = 'a, button, .btn, .card, .intro-card, .event-card, .platform-card, .learn-card, .tool-card';
+    function onPointerOver(e){
+        const el = e.target.closest && e.target.closest(interactiveSelector);
+        if (el) glow.classList.add('cursor-glow--strong');
+    }
+    function onPointerOut(e){
+        const el = e.target.closest && e.target.closest(interactiveSelector);
+        if (el) glow.classList.remove('cursor-glow--strong');
+    }
+
+    // Throttled animation loop via rAF
+    function animate(){
+        // Lerp current towards target
+        curX += (targetX - curX) * lerpFactor;
+        curY += (targetY - curY) * lerpFactor;
+
+        // Apply transform (translate from center)
+        glow.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`;
+
+        // Fade out when idle
+        const now = performance.now();
+        if (now - lastMove > idleFadeMs) {
+            glow.style.opacity = '0';
+            visible = false;
+        }
+
+        rafId = requestAnimationFrame(animate);
+    }
+
+    // Start the loop
+    rafId = requestAnimationFrame(animate);
+
+    // Event listeners
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('pointerover', onPointerOver, { passive: true });
+    window.addEventListener('pointerout', onPointerOut, { passive: true });
+    window.addEventListener('mouseleave', onLeave, { passive: true });
+    window.addEventListener('mouseenter', onEnter, { passive: true });
+    window.addEventListener('blur', onLeave, { passive: true });
+
+    // Clean up on unload
+    window.addEventListener('beforeunload', function(){
+        cancelAnimationFrame(rafId);
+        try{ glow.remove(); }catch(e){}
+    });
+})();

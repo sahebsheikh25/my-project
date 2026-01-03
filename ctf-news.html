@@ -400,34 +400,53 @@
       const filter = document.getElementById('ctfFilter');
       grid.innerHTML = '<p style="color:var(--text-secondary)">Loading events…</p>';
       let events = [];
-      try{
-        const res = await fetch('/ctf-events.json');
-        let bodyText = '';
-        try{ bodyText = await res.text(); } catch(_) { bodyText = ''; }
-        if(!res.ok){
-          console.warn('ctf-events.json fetch error', res.status, bodyText);
-          throw new Error('no json');
+      // Use built-in default events (no external JSON required)
+      events = [
+        {
+          name: 'Hack with India',
+          platform: 'HackWithIndia',
+          logo: 'HWI',
+          mode: 'Online',
+          difficulty: 'Beginner',
+          start_date: '2026-02-10',
+          end_date: '2026-02-11',
+          reg_url: 'https://www.hackwithindia.com/',
+          region: 'global'
+        },
+        {
+          name: 'HackWithIndia – Winter CTF',
+          platform: 'HackWithIndia',
+          logo: 'HWI',
+          mode: 'Online',
+          difficulty: 'All Levels',
+          start_date: '2026-03-05',
+          end_date: '2026-03-07',
+          reg_url: 'https://www.hackwithindia.com/',
+          region: 'global'
+        },
+        {
+          name: 'Hack The Box – Weekly',
+          platform: 'HTB',
+          logo: 'HTB',
+          mode: 'Online',
+          difficulty: 'Intermediate',
+          start_date: 'Ongoing',
+          end_date: '',
+          reg_url: 'https://www.hackthebox.com/',
+          region: 'global'
+        },
+        {
+          name: 'TryHackMe – Advent of Cyber',
+          platform: 'THM',
+          logo: 'THM',
+          mode: 'Online',
+          difficulty: 'Beginner–Pro',
+          start_date: '',
+          end_date: '',
+          reg_url: 'https://tryhackme.com/',
+          region: 'global'
         }
-        if(!bodyText || !bodyText.trim()){
-          // empty file — avoid JSON.parse throwing
-          console.warn('ctf-events.json is empty, falling back to defaults');
-          events = [];
-        } else {
-          try{
-            events = JSON.parse(bodyText);
-            if(!Array.isArray(events)) {
-              console.warn('ctf-events.json is not an array, using fallback');
-              events = [];
-            }
-          }catch(err){
-            console.warn('Invalid JSON in /ctf-events.json, using fallback', err, bodyText);
-            events = [];
-          }
-        }
-      }catch(e){
-        console.warn('Could not load /ctf-events.json, using fallback', e);
-        events = [];
-      }
+      ];
 
       // sort events: live first, then upcoming by nearest start date
       events.sort((a,b)=>{

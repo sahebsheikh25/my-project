@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="monetag" content="994b03dd83e118aec22ab92e48cbb9af">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>OSINT Tools & Resources - SN Security</title>
   <link rel="preload" href="/style.css" as="style" onload="this.rel='stylesheet'">
@@ -18,6 +19,12 @@
     .osint-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:20px}
     .tool-box{display:block;padding:14px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border-color);text-decoration:none;color:var(--text-primary);font-weight:600}
     .tool-box small{display:block;color:var(--text-secondary);font-weight:400;margin-top:6px}
+    /* Sky-light hover glow for OSINT cards */
+    .tool-box{position:relative;overflow:hidden;transition:transform .22s cubic-bezier(.2,.9,.25,1),box-shadow .22s ease}
+    .tool-box::before{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:260px;height:260px;border-radius:50%;background:radial-gradient(circle at center, rgba(0,255,178,0.14) 0%, rgba(0,200,255,0.06) 35%, transparent 60%);opacity:0;pointer-events:none;transition:opacity .28s ease,transform .28s ease}
+    .tool-box:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,255,178,0.08),0 0 36px rgba(0,200,255,0.04)}
+    .tool-box:hover::before{opacity:1;transform:translateX(-50%) translateY(-8%)}
+    .tool-box:focus-within{outline:2px solid rgba(0,255,178,0.06);outline-offset:4px}
     .section-block{padding:40px 0}
     .section-title{font-family:var(--font-heading);color:var(--accent-primary);margin:0 0 8px}
     .section-sub{color:var(--text-secondary);margin:0 0 12px}
@@ -90,6 +97,7 @@
         <li><a href="osint.html" class="nav-link active">OSINT</a></li>
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="/legal.html" class="nav-link">Legal</a></li>
       </ul>
     </div>
   </nav>
@@ -671,9 +679,9 @@
         <div class="footer-section">
           <h3>Legal</h3>
           <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Disclaimer</a></li>
+            <li><a href="/legal.html">Privacy Policy</a></li>
+            <li><a href="/legal.html">Terms of Service</a></li>
+            <li><a href="/legal.html">Disclaimer</a></li>
           </ul>
         </div>
       </div>

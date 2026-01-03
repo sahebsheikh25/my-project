@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="monetag" content="994b03dd83e118aec22ab92e48cbb9af">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/assets/logo.svg">
@@ -188,6 +189,12 @@
             box-shadow: 0 0 10px var(--glow-color);
         }
 
+        /* Wrapper to control timeline offset and left padding (replace inline styles) */
+        .roadmap-inner {
+            position: relative;
+            padding-left: 40px;
+        }
+
         @media (max-width: 768px) {
             .roadmap-step::before,
             .step-number {
@@ -200,6 +207,33 @@
 
             .roadmap-step:hover {
                 transform: translateY(-5px);
+            }
+
+            /* Mobile adjustments: reduce paddings, move timeline closer to edge */
+            .roadmap-inner {
+                padding-left: 12px;
+            }
+
+            .roadmap-container {
+                padding: 40px 12px;
+                max-width: 100%;
+            }
+
+            .roadmap-hero {
+                padding: 88px 16px 40px;
+                min-height: 48vh;
+            }
+
+            .roadmap-step {
+                padding: 1.25rem;
+            }
+
+            .roadmap-step h3 {
+                font-size: 1.25rem;
+            }
+
+            .roadmap-timeline {
+                left: 12px;
             }
         }
     </style>
@@ -229,6 +263,7 @@
                 <li><a href="osint.html" class="nav-link">OSINT</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
+                     <li><a href="/legal.html" class="nav-link">Legal</a></li>
             </ul>
         </div>
     </nav>
@@ -241,7 +276,7 @@
     </section>
 
     <div class="roadmap-container">
-        <div style="position: relative; padding-left: 40px;">
+        <div class="roadmap-inner">
             <div class="roadmap-timeline"></div>
 
             <div class="roadmap-step" data-aos="fade-left">
@@ -530,9 +565,9 @@
                 <div class="footer-section">
                     <h3>Legal</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="/legal.html">Privacy Policy</a></li>
+                            <li><a href="/legal.html">Terms of Service</a></li>
+                            <li><a href="/legal.html">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>

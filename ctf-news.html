@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="monetag" content="994b03dd83e118aec22ab92e48cbb9af">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CTF & News - SN Security</title>
   <meta name="description" content="SN Security - Lost phone report, OSINT tools, cyber safety platform. Secure your digital identity.">
@@ -77,6 +78,16 @@
     .daily-tip{background:linear-gradient(90deg, rgba(0,255,178,0.03), rgba(0,200,255,0.02));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--text-secondary)}
 
     @media (max-width:900px){.news-feed{grid-template-columns:1fr}.ctf-hero{padding-top:140px}}
+    /* Ensure platform cards keep a good readable shape on mobile */
+    @media (max-width:900px) {
+      .platforms-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .platform-card { aspect-ratio: auto !important; height: auto !important; min-height: 110px; padding: 14px; display: flex; align-items: center; justify-content: center; text-align: center; }
+      .platform-card a.btn { margin-top: 8px; }
+    }
+    @media (max-width:480px) {
+      .platforms-grid { grid-template-columns: 1fr; }
+      .platform-card { min-height: 100px; padding: 12px; }
+    }
     /* Footer social icon shapes + accessibility helper */
     .footer-social{display:flex;gap:8px;align-items:center}
     .footer-social .social-link{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:var(--text-primary);text-decoration:none;font-weight:700}
@@ -116,6 +127,18 @@
       @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
       @media (max-width:920px){.notification-marquee .marquee__item{font-size:0.92rem}.notification-marquee .marquee__track{animation-duration:28s}}
       @media (max-width:520px){.notification-marquee .marquee__item{font-size:0.86rem}.notification-marquee .marquee__track{animation-duration:20s}}
+      /* Gradient text effect for headings and news titles */
+      .hero-title, .section-title, .news-meta h4, .platform-card strong {
+        background: linear-gradient(90deg, #00ffa2, #00c2ff, #7a00ff, #ff00bf);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% 100%;
+        transition: background-position 0.8s ease;
+      }
+      .hero-title:hover, .section-title:hover, .news-meta h4:hover, .platform-card strong:hover {
+        background-position: 100% 0;
+      }
   </style>
 
 
@@ -141,6 +164,7 @@
         <li><a href="/osint.html" class="nav-link">OSINT</a></li>
         <li><a href="/about.html" class="nav-link">About</a></li>
         <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        <li><a href="/legal.html" class="nav-link">Legal</a></li>
       </ul>
     </div>
   </nav>
@@ -297,9 +321,9 @@
                 <div class="footer-section">
                     <h3>Legal</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="/legal.html">Privacy Policy</a></li>
+                        <li><a href="/legal.html">Terms of Service</a></li>
+                        <li><a href="/legal.html">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
@@ -592,5 +616,6 @@
     // init events after page load
     setTimeout(loadCTFEvents, 500);
   </script>
+  <script src="/script.js" defer></script>
 </body>
 </html>

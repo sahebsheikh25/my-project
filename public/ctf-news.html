@@ -19,10 +19,14 @@
 
 
     /* Events grid: show four square cards on desktop */
-    .events-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
-    .event-card{background:linear-gradient(180deg, rgba(6,12,22,0.6), rgba(4,10,18,0.6));border:1px solid rgba(0,255,178,0.06);padding:10px;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:10px;aspect-ratio:1/1;min-height:0}
+    .events-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px;grid-auto-rows:1fr;align-items:stretch}
+    .event-card{background:linear-gradient(180deg, rgba(6,12,22,0.6), rgba(4,10,18,0.6));border:1px solid rgba(0,255,178,0.06);padding:10px;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:10px;aspect-ratio:1/1;min-height:0;height:100%}
     .event-logo{width:56px;height:56px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent-secondary);font-family:var(--font-heading);font-size:1rem}
-    .event-meta{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:8px}
+    .event-meta{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:8px;min-width:0}
+    .event-footer{display:flex;justify-content:flex-end;margin-top:auto;flex-shrink:0;min-height:48px}
+    .event-meta{min-width:0}
+    .event-card{overflow:visible}
+    .event-cta{flex-shrink:0}
     .event-meta h4{margin:0;font-family:var(--font-heading);color:var(--accent-primary);font-size:1rem}
     .event-row{display:flex;gap:8px;flex-wrap:wrap;color:var(--text-secondary);font-size:0.92rem}
     .event-dates{color:var(--text-secondary);font-size:0.92rem;margin-top:6px}
@@ -42,12 +46,19 @@
     @media (max-width:900px){
       .events-grid{display:flex;flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;gap:12px;scroll-snap-type:x mandatory}
       .event-card{min-width:240px;flex:0 0 auto;scroll-snap-align:center}
+      /* allow variable height cards on small screens so CTAs remain visible */
+      .event-card{aspect-ratio:auto}
       .platforms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .ctf-ticker .ticker-track{animation-duration:20s}
     }
     @media (min-width:901px){
       .ctf-ticker .ticker-track{animation-duration:36s}
     }
+
+    /* Stronger specificity to override global .event-card rules in external CSS */
+    .events-grid .event-card{overflow:visible !important;height:100% !important}
+    .events-grid .event-footer{min-height:48px !important;margin-top:auto !important;flex-shrink:0 !important}
+    .events-grid .event-cta{touch-action:manipulation}
 
     /* Platforms: four square cards, same shape as events */
     .platforms-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
@@ -57,8 +68,9 @@
     /* News feed */
     .news-feed{display:grid;grid-template-columns:2fr 1fr;gap:18px}
     .news-list{display:flex;flex-direction:column;gap:12px}
-    .news-card{display:flex;gap:12px;background:var(--bg-card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-    .news-thumb{width:110px;height:72px;background:#0b1220;border-radius:8px;flex:0 0 110px}
+    .news-card{display:flex;gap:12px;background:var(--bg-card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);align-items:flex-start}
+    .news-meta{flex:1;min-width:0}
+    .news-thumb{width:110px;height:72px;background:#0b1220;border-radius:8px;flex:0 0 110px;object-fit:cover}
     .news-meta h4{margin:0;font-size:1rem;color:var(--accent-primary)}
     .news-meta p{margin:6px 0 0;color:var(--text-secondary);font-size:0.92rem}
 
@@ -125,7 +137,7 @@
   <!-- Notification bar (mirrors Home page alert) -->
   <div class="ctf-notice" role="region" aria-label="Important notification">
     <div class="marquee-inner" aria-hidden="false">
-      <a href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
+      <a href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / — CLICK HERE</a>
     </div>
   </div>
 
@@ -303,8 +315,25 @@
     // Fetch tech news via serverless proxy (keeps API key secret)
     async function fetchNews(){
       const list = document.getElementById('newsList');
+      if(!list) return;
       list.innerHTML = '<p style="color:var(--text-secondary)">Loading latest tech news…</p>';
       const endpoint = '/api/news';
+
+      // If opened via file:// (local), the serverless proxy isn't available — show fallback
+      if (location && location.protocol === 'file:') {
+        console.warn('Local file protocol detected, using fallback news');
+        const fallback = [
+          {title:'Massive data leak affects millions — investigation ongoing', src:'Krebs', url:'#', published:'2h ago', description:'Investigation ongoing into leaked records.'},
+          {title:'New ransomware strain actively targeting cloud backups', src:'The Hacker News', url:'#', published:'4h ago', description:'Operators targeting backup systems.'}
+        ];
+        list.innerHTML = '';
+        fallback.forEach(n => {
+          const card = document.createElement('div'); card.className = 'news-card';
+          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(n.url) + '" target="_blank">Read more</a></p></div>';
+          list.appendChild(card);
+        });
+        return;
+      }
       try{
         const resp = await fetch(endpoint);
         let bodyText = '';
@@ -322,9 +351,23 @@
             const thumb = a.urlToImage ? '<div class="news-thumb" style="background-image:url(' + escapeHtml(a.urlToImage) + ');background-size:cover;background-position:center"></div>' : '<div class="news-thumb"></div>';
             const published = a.publishedAt ? new Date(a.publishedAt).toLocaleString() : '';
             const desc = a.description ? '<p>' + escapeHtml(a.description) + '</p>' : '';
-            card.innerHTML = thumb + '<div class="news-meta"><h4>' + escapeHtml(a.title) + '</h4><p>' + escapeHtml(a.source.name) + ' · ' + escapeHtml(published) + '</p>' + desc + '<p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(a.url) + '" target="_blank">Read more</a></p></div>';
+            const href = a.url ? a.url : '';
+            card.innerHTML = thumb + '<div class="news-meta"><h4>' + escapeHtml(a.title) + '</h4><p>' + escapeHtml((a.source&&a.source.name)||'') + ' · ' + escapeHtml(published) + '</p>' + desc + '<p style="margin-top:8px">' + (href ? ('<a class="btn btn-secondary" href="' + escapeHtml(href) + '" data-href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">Read more</a>') : ('<span class="btn btn-secondary" aria-disabled="true" style="opacity:0.6;pointer-events:none">Read more</span>')) + '</p></div>';
             list.appendChild(card);
           });
+        // attach reliable click handlers for dynamically inserted Read more links
+        setTimeout(() => {
+          document.querySelectorAll('#newsList a[data-href]').forEach(a => {
+            if (a.__newsHandlerAttached) return; // idempotent
+            a.addEventListener('click', function(e){
+              const h = this.getAttribute('data-href');
+              if (!h) return;
+              // open in new tab/window; some browsers block if not via user gesture — this is a direct click
+              window.open(h, '_blank');
+            });
+            a.__newsHandlerAttached = true;
+          });
+        }, 10);
       }catch(err){
         console.warn('News fetch failed:', err);
         // Fallback: show a few static items
@@ -335,9 +378,21 @@
         list.innerHTML = '';
         fallback.forEach(n => {
           const card = document.createElement('div'); card.className='news-card';
-          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(n.url) + '" target="_blank">Read more</a></p></div>';
+          const href = n.url || '';
+          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px">' + (href ? ('<a class="btn btn-secondary" href="' + escapeHtml(href) + '" data-href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">Read more</a>') : ('<span class="btn btn-secondary" aria-disabled="true" style="opacity:0.6;pointer-events:none">Read more</span>')) + '</p></div>';
           list.appendChild(card);
         });
+        setTimeout(() => {
+          document.querySelectorAll('#newsList a[data-href]').forEach(a => {
+            if (a.__newsHandlerAttached) return;
+            a.addEventListener('click', function(e){
+              const h = this.getAttribute('data-href');
+              if (!h) return;
+              window.open(h, '_blank');
+            });
+            a.__newsHandlerAttached = true;
+          });
+        }, 10);
       }
     }
 
@@ -488,7 +543,7 @@
             const status = eventStatus(ev);
             const badgeLabel = status === 'live' ? 'LIVE' : 'UPCOMING';
             const dateDisplay = end ? (escapeHtml(start) + ' — ' + escapeHtml(end)) : escapeHtml(start);
-            const reg = ev.reg_url || '#';
+            const reg = ev.reg_url && ev.reg_url.trim() && ev.reg_url !== '#' ? ev.reg_url.trim() : '';
             card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:start;gap:8px">'
               + '<div style="display:flex;align-items:center;gap:8px">'
                 + '<span class="badge ' + status.toLowerCase() + '">' + badgeLabel + '</span>'
@@ -500,7 +555,7 @@
                 + '<div class="event-row"><span>Mode: ' + escapeHtml(ev.mode || 'Online') + '</span><span>Difficulty: ' + escapeHtml(ev.difficulty || 'Varies') + '</span></div>'
                 + '<div class="event-dates"><strong>Dates:</strong> ' + dateDisplay + '</div>'
             + '</div>'
-            + '<div style="display:flex;justify-content:flex-end;margin-top:8px"><a class="event-cta" href="' + reg + '" target="_blank" rel="noopener noreferrer">Register</a></div>';
+            + (reg ? ('<div class="event-footer"><a class="event-cta" href="' + escapeHtml(reg) + '" target="_blank" rel="noopener noreferrer">Register</a></div>') : ('<div class="event-footer"><span class="event-cta" aria-disabled="true" style="opacity:0.6;pointer-events:none">Registration TBA</span></div>'));
             grid.appendChild(card);
           });
       }

@@ -141,13 +141,18 @@ function showSuccessPopup() {
 }
 
 // Tool Filter Functionality (for tools and OSINT pages)
-function filterTools(category) {
+function filterTools(category, evt) {
     const tools = document.querySelectorAll('.tool-card');
     const buttons = document.querySelectorAll('.filter-btn');
-    
+
     // Update active button
     buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (evt && evt.target) {
+        evt.target.classList.add('active');
+    } else {
+        const btn = document.querySelector(`.filter-btn[data-cat="${category}"]`);
+        if (btn) btn.classList.add('active');
+    }
     
     // Filter tools
     tools.forEach(tool => {

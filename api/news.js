@@ -2,7 +2,9 @@
 export default async function handler(req, res) {
   const NEWS_API_KEY = process.env.NEWS_API_KEY;
   if (!NEWS_API_KEY) {
-    res.status(500).json({ error: 'News API key not configured on server' });
+    // NEWS_API_KEY not configured — return a harmless 200 with empty articles
+    // Frontend will render fallback news when articles array is empty.
+    res.status(200).json({ status: 'ok', totalResults: 0, articles: [] });
     return;
   }
 

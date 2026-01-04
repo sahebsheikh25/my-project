@@ -137,6 +137,17 @@
       /* Reduce marquee footprint on very small screens to avoid overlapping hero */
       .top-marquee, .top-marquee-home{padding:4px 6px}
       .top-marquee a, .top-marquee-home a{font-size:0.9rem}
+
+      /* Mobile card adjustments: reduce padding, remove hover lift, ensure full width */
+      .tool-box{padding:10px;border-radius:10px;font-size:0.95rem}
+      .tool-box small{margin-top:6px;font-size:0.9rem}
+      .tool-box:hover{transform:none;box-shadow:none}
+      .tool-box::before{width:min(180px,50vw);height:min(180px,50vw);opacity:0.08}
+      .osint-grid{grid-template-columns:1fr;gap:10px}
+      .tool-box{width:100%;box-sizing:border-box}
+      .tool-box .muted, .tool-box small{color:var(--text-secondary)}
+      /* Make action buttons within cards stack/widen on mobile */
+      .tool-box .btn, .tool-box .tool-btn { width:100%; display:block; margin-top:8px; }
     }
 
     /* Very small screens: hide duplicated home marquee to avoid overlap and reduce paint */

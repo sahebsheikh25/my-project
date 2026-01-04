@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "-- public/ listing --"
           ls -la public || true
-          echo "\n-- public/index.html (head) --"
+          printf '\n-- public/index.html (head) --\n'
           sed -n '1,120p' public/index.html || true
       - name: Deploy to Vercel
         env:

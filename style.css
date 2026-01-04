@@ -138,6 +138,39 @@ body {
     .nav-toggle { z-index: 2300; }
 }
 
+/* Reduce oversized hero headings on mobile for core pages */
+@media (max-width: 768px) {
+    /* general hero title scaling */
+    .hero-title {
+        font-size: clamp(2rem, 6.5vw, 3.6rem) !important;
+        letter-spacing: 2px;
+        margin-bottom: 0.6rem;
+        line-height: 1.05;
+    }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 0.6rem; }
+    .hero-tagline { font-size: 0.98rem; }
+
+    /* page-scoped selectors to ensure consistent behavior across named hero variants */
+    .tools-hero .hero-title,
+    .roadmap-page .hero-title,
+    .osint-page .hero-title,
+    .news-page .hero-title,
+    .home-hero .hero-title { font-size: clamp(1.9rem, 6vw, 3.4rem) !important; }
+}
+
+@media (max-width: 520px) {
+    .hero-title {
+        font-size: clamp(1.6rem, 8.5vw, 2.6rem) !important;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+    }
+    .hero-subtitle { font-size: 0.95rem; }
+    .hero-tagline { font-size: 0.9rem; }
+
+    /* ensure hero min-height doesn't push content too far on small screens */
+    .hero, .tools-hero { padding-top: calc(var(--site-nav-height) + 8px); min-height: 24vh; }
+}
+
 /* Prevent duplicate/stacked top ads: hide any additional top-ad-container instances */
 .top-ad-container + .top-ad-container{display:none !important}
 
@@ -1351,3 +1384,4 @@ main.container { padding: 48px 20px; }
 /* make sure fixed navbar doesn't overlap anchored content */
 :root { scroll-behavior: smooth; }
 html { scroll-padding-top: calc(var(--site-nav-height)); }
+

@@ -11,7 +11,8 @@ if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir);
 
 const files = fs.readdirSync(root);
 files.forEach(f => {
-  if (!f.toLowerCase().endsWith('.html')) return;
+  // Copy top-level HTML and critical site JS files (ads loader + main script)
+  if (!f.toLowerCase().endsWith('.html') && !['ads.js','script.js','store.js','style.css','store.css'].includes(f.toLowerCase())) return;
   const src = path.join(root, f);
   const dest = path.join(publicDir, f);
   const stat = fs.statSync(src);

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="monetag" content="6ba60e830ad87a9d9adc7f623aeb8aa8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/assets/logo.svg">
+    <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./assets/logo.svg">
     <title>Learning Roadmap - SN Security</title>
     <meta name="description" content="SN Security - Lost phone report, OSINT tools, cyber safety platform. Secure your digital identity.">
-    <link rel="preload" href="/style.css" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/style.css"></noscript>
+    <link rel="preload" href="./style.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -236,6 +236,30 @@
                 left: 12px;
             }
         }
+
+        /* Additional small-screen tweaks to avoid horizontal overflow and improve readability */
+        html, body { -webkit-text-size-adjust: 100%; }
+
+        .roadmap-container img{ max-width:100%; height:auto; }
+
+        .roadmap-step { min-width: 0; word-break: break-word; overflow: hidden; }
+
+        .topic-tag { white-space: normal; max-width: 100%; }
+
+        .step-resources { align-items: flex-start; }
+
+        .resource-link { flex: 1 1 100%; min-width: 0; word-break: break-word; }
+
+        @media (max-width: 480px) {
+            .roadmap-container { padding: 24px 12px; }
+            .roadmap-step { padding: 0.9rem; }
+            .roadmap-step h3 { font-size: 1.1rem; }
+            .step-icon { width: 40px; height: 40px; }
+            .topic-tag { font-size: 0.85rem; padding: 0.35rem 0.7rem; }
+            .step-topics { gap: 8px; }
+            .roadmap-timeline { left: 8px; width: 3px; }
+            .roadmap-inner { padding-left: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -244,8 +268,8 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="/index.html" class="nav-home" aria-label="SN Security Home">
-                    <img src="assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
+                <a href="./index.html" class="nav-home" aria-label="SN Security Home">
+                    <img src="./assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
                     <span>SN Security</span>
                 </a>
             </div>
@@ -256,14 +280,14 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="/roadmap.html" class="nav-link active">Roadmap</a></li>
+                <li><a href="./roadmap.html" class="nav-link active">Roadmap</a></li>
                 <li><a href="tools.html" class="nav-link">Tools</a></li>
                 <li><a href="tech-store.html" class="nav-link">Store</a></li>
                 <li><a href="ctf-news.html" class="nav-link">CTF & News</a></li>
                 <li><a href="osint.html" class="nav-link">OSINT</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/legal.html" class="nav-link">Legal</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                     <li><a href="/legal.html" class="nav-link">Legal</a></li>
             </ul>
         </div>
     </nav>
@@ -515,7 +539,7 @@
                 <div class="footer-section">
                     <div class="footer-logo">
                         <a href="index.html" class="footer-home" aria-label="SN Security Home">
-                            <img src="assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
+                            <img src="./assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
                             <span>SN Security</span>
                         </a>
                     </div>
@@ -549,7 +573,7 @@
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="/roadmap.html">Roadmap</a></li>
+                        <li><a href="./roadmap.html">Roadmap</a></li>
                         <li><a href="tools.html">Tools</a></li>
                         <li><a href="osint.html">OSINT</a></li>
                     </ul>
@@ -566,8 +590,8 @@
                     <h3>Legal</h3>
                     <ul class="footer-links">
                         <li><a href="/legal.html">Privacy Policy</a></li>
-                        <li><a href="/legal.html">Terms of Service</a></li>
-                        <li><a href="/legal.html">Disclaimer</a></li>
+                            <li><a href="/legal.html">Terms of Service</a></li>
+                            <li><a href="/legal.html">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>

@@ -188,6 +188,12 @@ body {
     z-index: 50;
 }
 
+/* Ensure homepage marquee is visible above navbar on all deployments */
+.top-marquee-home {
+    position: relative;
+    z-index: 1101;
+}
+
 .notification-banner .banner-inner {
     width: 100%;
     display: flex;

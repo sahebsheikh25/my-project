@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CTF & News - SN Security</title>
   <meta name="description" content="SN Security - Lost phone report, OSINT tools, cyber safety platform. Secure your digital identity.">
-  <link rel="preload" href="/style.css" as="style" onload="this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/style.css"></noscript>
+  <link rel="preload" href="./style.css" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="./style.css"></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -20,14 +20,12 @@
 
 
     /* Events grid: show four square cards on desktop */
-    .events-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px;grid-auto-rows:1fr;align-items:stretch}
-    .event-card{background:linear-gradient(180deg, rgba(6,12,22,0.6), rgba(4,10,18,0.6));border:1px solid rgba(0,255,178,0.06);padding:10px;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:10px;aspect-ratio:1/1;min-height:0;height:100%}
-    .event-logo{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-family:var(--font-heading);font-size:1rem;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(90deg,#ff004d,#ff7a00,#ffd300,#00d100,#00b7ff,#7a00ff,#ff00bf);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;animation:rainbowShift 6s linear infinite;box-shadow:0 6px 18px rgba(0,0,0,0.28)}
-    .event-meta{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:8px;min-width:0}
-    .event-footer{display:flex;justify-content:flex-end;margin-top:auto;flex-shrink:0;min-height:48px}
-    .event-meta{min-width:0}
-    .event-card{overflow:visible}
-    .event-cta{flex-shrink:0}
+    .events-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .event-card{background:linear-gradient(180deg, rgba(6,12,22,0.6), rgba(4,10,18,0.6));border:1px solid rgba(0,255,178,0.06);padding:10px;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;gap:10px;aspect-ratio:1/1;min-height:0}
+    .event-logo{width:56px;height:56px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent-secondary);font-family:var(--font-heading);font-size:1rem}
+    .event-meta{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:8px}
+      .event-logo{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-family:var(--font-heading);font-size:1rem;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(90deg,#ff004d,#ff7a00,#ffd300,#00d100,#00b7ff,#7a00ff,#ff00bf);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;animation:rainbowShift 6s linear infinite;box-shadow:0 6px 18px rgba(0,0,0,0.28)}
+      .event-meta{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:8px}
     .event-meta h4{margin:0;font-family:var(--font-heading);color:var(--accent-primary);font-size:1rem}
     .event-row{display:flex;gap:8px;flex-wrap:wrap;color:var(--text-secondary);font-size:0.92rem}
     .event-dates{color:var(--text-secondary);font-size:0.92rem;margin-top:6px}
@@ -37,53 +35,24 @@
     .ctf-ticker{overflow:hidden;border-radius:8px;background:linear-gradient(90deg,rgba(0,0,0,0.12),rgba(0,0,0,0.04));padding:8px;margin-top:12px;border:1px solid rgba(255,255,255,0.02)}
     .ctf-ticker .ticker-track{display:inline-block;white-space:nowrap;will-change:transform;animation:scroll-left linear infinite}
     .ctf-ticker .ticker-item{display:inline-flex;align-items:center;gap:10px;margin-right:28px;color:var(--text-secondary)}
-    .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:800;font-size:0.75rem;background:linear-gradient(90deg,#ff004d,#ff7a00,#ffd300,#00d100,#00b7ff,#7a00ff,#ff00bf);background-size:200% 200%;color:#021017;animation:rainbowShift 5s linear infinite}
-    .badge.live{color:#fff}
-    .badge.upcoming{color:#021017}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:800;font-size:0.75rem}
+      .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:800;font-size:0.75rem;background:linear-gradient(90deg,#ff004d,#ff7a00,#ffd300,#00d100,#00b7ff,#7a00ff,#ff00bf);background-size:200% 200%;color:#021017;animation:rainbowShift 5s linear infinite}
+      .badge.live{color:#fff}
+      .badge.upcoming{color:#021017}
 
     @keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)} }
-    @keyframes rainbowShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+      @keyframes rainbowShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
     /* Mobile-first: stack cards 1-per-row, avoid horizontal scrolling */
-    /* Gradient text effect for headings and news titles */
-    .hero-title, .section-title, .news-meta h4, .platform-card strong {
-      background: linear-gradient(90deg, #00ffa2, #00c2ff, #7a00ff, #ff00bf);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-size: 200% 100%;
-      transition: background-position 0.8s ease;
-    }
-    .hero-title:hover, .section-title:hover, .news-meta h4:hover, .platform-card strong:hover {
-      background-position: 100% 0;
-    }
     @media (max-width:900px){
       .events-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
       .event-card{aspect-ratio:auto;width:100%;min-width:0;height:auto}
       .platforms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .ctf-ticker .ticker-track{animation-duration:20s}
     }
-    /* Ensure platform cards keep a good readable shape on mobile */
-    @media (max-width:900px) {
-      .platforms-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .platform-card { aspect-ratio: auto !important; height: auto !important; min-height: 110px; padding: 14px; display: flex; align-items: center; justify-content: center; text-align: center; }
-      .platform-card a.btn { margin-top: 8px; }
-    }
-    @media (max-width:480px) {
-      .platforms-grid { grid-template-columns: 1fr; }
-      .platform-card { min-height: 100px; padding: 12px; }
-    }
-      .platforms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .ctf-ticker .ticker-track{animation-duration:20s}
-    }
     @media (min-width:901px){
       .ctf-ticker .ticker-track{animation-duration:36s}
     }
-
-    /* Stronger specificity to override global .event-card rules in external CSS */
-    .events-grid .event-card{overflow:visible !important;height:100% !important}
-    .events-grid .event-footer{min-height:48px !important;margin-top:auto !important;flex-shrink:0 !important}
-    .events-grid .event-cta{touch-action:manipulation}
 
     /* Platforms: four square cards, same shape as events */
     .platforms-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
@@ -93,9 +62,8 @@
     /* News feed */
     .news-feed{display:grid;grid-template-columns:2fr 1fr;gap:18px}
     .news-list{display:flex;flex-direction:column;gap:12px}
-    .news-card{display:flex;gap:12px;background:var(--bg-card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);align-items:flex-start}
-    .news-meta{flex:1;min-width:0}
-    .news-thumb{width:110px;height:72px;background:#0b1220;border-radius:8px;flex:0 0 110px;object-fit:cover}
+    .news-card{display:flex;gap:12px;background:var(--bg-card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    .news-thumb{width:110px;height:72px;background:#0b1220;border-radius:8px;flex:0 0 110px}
     .news-meta h4{margin:0;font-size:1rem;color:var(--accent-primary)}
     .news-meta p{margin:6px 0 0;color:var(--text-secondary);font-size:0.92rem}
 
@@ -110,42 +78,93 @@
     .daily-tip{background:linear-gradient(90deg, rgba(0,255,178,0.03), rgba(0,200,255,0.02));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--text-secondary)}
 
     @media (max-width:900px){.news-feed{grid-template-columns:1fr}.ctf-hero{padding-top:140px}}
+    /* Ensure platform cards keep a good readable shape on mobile */
+    @media (max-width:900px) {
+      .platforms-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .platform-card { aspect-ratio: auto !important; height: auto !important; min-height: 110px; padding: 14px; display: flex; align-items: center; justify-content: center; text-align: center; }
+      .platform-card a.btn { margin-top: 8px; }
+    }
+    @media (max-width:480px) {
+      .platforms-grid { grid-template-columns: 1fr; }
+      .platform-card { min-height: 100px; padding: 12px; }
+    }
     /* Footer social icon shapes + accessibility helper */
     .footer-social{display:flex;gap:8px;align-items:center}
     .footer-social .social-link{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:var(--text-primary);text-decoration:none;font-weight:700}
     .footer-social .social-link:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.25)}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    /* CTF page notification (mirrors Home page marquee style) */
+    /* CTF page notification (matches Home page marquee style) */
     .ctf-notice{width:100%;position:relative;overflow:hidden;padding:8px 0;margin-bottom:12px;background:transparent;z-index:800}
     .ctf-notice .marquee-inner{display:flex;align-items:center;gap:44px;white-space:nowrap;will-change:transform;animation:marquee-ctf 28s linear infinite}
     .ctf-notice a{display:inline-block;padding:6px 12px;font-weight:800;color:#9ef0ff;text-decoration:none;font-family:var(--font-heading,'Rajdhani',system-ui);font-size:0.96rem;border-radius:6px;text-shadow:0 0 16px rgba(158,240,255,0.95)}
     .ctf-notice a:hover{filter:brightness(1.04);text-decoration:underline}
     @keyframes marquee-ctf{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+      /* Notification marquee (pure HTML + CSS)
+         - Pure CSS marquee using a CSS ::after duplication to create a seamless
+           loop without duplicating the clickable anchor in the DOM. The link
+           (the first anchor) remains the only interactive element.
+         - Separation of concerns: the marquee movement is a transform animation
+           on the track; the color-shift is a separate background-position
+           animation applied to the text via background-clip:text.
+         - Avoids 100vw to prevent horizontal scrollbars on mobile and ensures
+           consistent behavior on CDN deployments (Vercel) where fonts may load
+           asynchronously.
+      */
+      .notification-marquee{background:#031027;color:#9ef0ff;padding:10px 0;margin-bottom:12px;overflow:hidden}
+      .notification-marquee .marquee{overflow:hidden}
+      .notification-marquee .marquee__track{display:inline-flex;align-items:center;white-space:nowrap;gap:48px;will-change:transform;animation:marquee-scroll 36s linear infinite}
+      /* Duplicate text via pseudo-element (not duplicate DOM anchors) */
+      .notification-marquee .marquee__track::after{content:attr(data-text);display:inline-block;margin-left:48px}
+      /* Clickable text (only the first anchor is interactive) */
+      .notification-marquee .marquee__item{display:inline-block;font-family:Orbitron, 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, Arial; font-weight:700;font-size:1rem;line-height:1;color:transparent;background:linear-gradient(90deg,#00f0ff,#0066ff,#ff66b3,#00ff9f);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 12px rgba(0,240,255,0.06);text-decoration:none}
+      .notification-marquee .marquee__item:focus{outline:2px solid rgba(0,240,255,0.12);outline-offset:4px}
+      .notification-marquee .marquee__item:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px;text-decoration-color:rgba(158,240,255,0.9);filter:brightness(1.05);text-shadow:0 0 20px rgba(158,240,255,0.35)}
+      /* subtle color shimmer independent from movement */
+      .notification-marquee .marquee__item{animation:colorShift 6s linear infinite}
+      @keyframes colorShift{0%{background-position:0% 50%}25%{background-position:33% 50%}50%{background-position:66% 50%}75%{background-position:100% 50%}100%{background-position:0% 50%}}
+      /* Move the whole track left by half its width (since ::after mirrors content)
+         This creates a continuous loop without visual jumps. */
+      @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+      @media (max-width:920px){.notification-marquee .marquee__item{font-size:0.92rem}.notification-marquee .marquee__track{animation-duration:28s}}
+      @media (max-width:520px){.notification-marquee .marquee__item{font-size:0.86rem}.notification-marquee .marquee__track{animation-duration:20s}}
+      /* Gradient text effect for headings and news titles */
+      .hero-title, .section-title, .news-meta h4, .platform-card strong {
+        background: linear-gradient(90deg, #00ffa2, #00c2ff, #7a00ff, #ff00bf);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% 100%;
+        transition: background-position 0.8s ease;
+      }
+      .hero-title:hover, .section-title:hover, .news-meta h4:hover, .platform-card strong:hover {
+        background-position: 100% 0;
+      }
   </style>
-</head>
-<body>
-  <canvas id="matrix" class="matrix-canvas"></canvas>
-  <div id="particles-js"></div>
+
 
   <nav class="navbar">
     <div class="nav-container">
       <div class="nav-logo">
-        <a href="/index.html" class="nav-home" aria-label="SN Security Home">
-          <img src="/assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
+        <a href="./index.html" class="nav-home" aria-label="SN Security Home">
+          <img src="./assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
           <span>SN Security</span>
         </a>
       </div>
-      <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+      <div class="nav-toggle" id="navToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <ul class="nav-menu" id="navMenu">
-        <li><a href="/index.html" class="nav-link">Home</a></li>
-        <li><a href="/roadmap.html" class="nav-link">Roadmap</a></li>
-        <li><a href="/tools.html" class="nav-link">Tools</a></li>
-        <li><a href="/tech-store.html" class="nav-link">Store</a></li>
-        <li><a href="/ctf-news.html" class="nav-link active">CTF & News</a></li>
-        <li><a href="/osint.html" class="nav-link">OSINT</a></li>
-        <li><a href="/about.html" class="nav-link">About</a></li>
-        <li><a href="/contact.html" class="nav-link">Contact</a></li>
-        <li><a href="/legal.html" class="nav-link">Legal</a></li>
+        <li><a href="./index.html" class="nav-link">Home</a></li>
+        <li><a href="./roadmap.html" class="nav-link">Roadmap</a></li>
+        <li><a href="./tools.html" class="nav-link">Tools</a></li>
+        <li><a href="./tech-store.html" class="nav-link">Store</a></li>
+        <li><a href="./ctf-news.html" class="nav-link active">CTF & News</a></li>
+        <li><a href="./osint.html" class="nav-link">OSINT</a></li>
+        <li><a href="./about.html" class="nav-link">About</a></li>
+        <li><a href="./contact.html" class="nav-link">Contact</a></li>
+        <li><a href="./legal.html" class="nav-link">Legal</a></li>
       </ul>
     </div>
   </nav>
@@ -159,17 +178,21 @@
         <a class="btn btn-secondary" href="#news">Latest News</a>
       </div>
     </div>
-  </section>
-  <!-- Notification bar (mirrors Home page alert) -->
-  <div class="ctf-notice" role="region" aria-label="Important notification">
-    <div class="marquee-inner" aria-hidden="false">
-      <a href="https://hackwithindia.com/" target="_blank" rel="noopener noreferrer">Register for Hack With India — 17 January 2026 | Online Event CLICK HERE</a>
-    </div>
-  </div>
+    <canvas id="matrix" class="matrix-canvas" aria-hidden="true"></canvas>
+    </section>
 
-  <main class="container">
+    <main class="container">
+
     <section id="events" class="section-block">
       <h2 class="section-title">Live / Upcoming CTF Events</h2>
+      <div class="notification-marquee" role="region" aria-label="Important notification">
+        <div class="marquee">
+          <div class="marquee__track" data-text="🔴 Register for Hack With India — 17 January 2026 | Online Event.">
+            <a class="marquee__item" href="https://www.hackwithindia.com/" target="_blank" rel="noopener noreferrer">🔴 Register for Hack With India — 17 January 2026 | Online Event.</a>
+          </div>
+        </div>
+      </div>
+    
       <p class="section-sub">Event Logo • CTF Name • Mode • Difficulty • Date • Join</p>
       <div class="ctf-ticker" aria-hidden="false"><div class="ticker-track" id="ctfTicker"></div></div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">
@@ -247,8 +270,8 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <a href="/index.html" class="footer-home" aria-label="SN Security Home">
-                          <img src="/assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
+                        <a href="./index.html" class="footer-home" aria-label="SN Security Home">
+                          <img src="./assets/logo.svg" alt="SN Security" width="40" height="40" decoding="async" loading="lazy">
                             <span>SN Security</span>
                         </a>
                     </div>
@@ -281,10 +304,10 @@
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                    <li><a href="/index.html">Home</a></li>
-                    <li><a href="/roadmap.html">Roadmap</a></li>
-                    <li><a href="/tools.html">Tools</a></li>
-                    <li><a href="/osint.html">OSINT</a></li>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./roadmap.html">Roadmap</a></li>
+                    <li><a href="./tools.html">Tools</a></li>
+                    <li><a href="./osint.html">OSINT</a></li>
                   </ul>
                 </div>
                 <div class="footer-section">
@@ -298,9 +321,9 @@
                 <div class="footer-section">
                     <h3>Legal</h3>
                     <ul class="footer-links">
-                        <li><a href="/legal.html">Privacy Policy</a></li>
-                        <li><a href="/legal.html">Terms of Service</a></li>
-                        <li><a href="/legal.html">Disclaimer</a></li>
+                        <li><a href="./legal.html">Privacy Policy</a></li>
+                        <li><a href="./legal.html">Terms of Service</a></li>
+                        <li><a href="./legal.html">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
@@ -341,25 +364,8 @@
     // Fetch tech news via serverless proxy (keeps API key secret)
     async function fetchNews(){
       const list = document.getElementById('newsList');
-      if(!list) return;
       list.innerHTML = '<p style="color:var(--text-secondary)">Loading latest tech news…</p>';
       const endpoint = '/api/news';
-
-      // If opened via file:// (local), the serverless proxy isn't available — show fallback
-      if (location && location.protocol === 'file:') {
-        console.warn('Local file protocol detected, using fallback news');
-        const fallback = [
-          {title:'Massive data leak affects millions — investigation ongoing', src:'Krebs', url:'#', published:'2h ago', description:'Investigation ongoing into leaked records.'},
-          {title:'New ransomware strain actively targeting cloud backups', src:'The Hacker News', url:'#', published:'4h ago', description:'Operators targeting backup systems.'}
-        ];
-        list.innerHTML = '';
-        fallback.forEach(n => {
-          const card = document.createElement('div'); card.className = 'news-card';
-          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(n.url) + '" target="_blank">Read more</a></p></div>';
-          list.appendChild(card);
-        });
-        return;
-      }
       try{
         const resp = await fetch(endpoint);
         let bodyText = '';
@@ -377,23 +383,9 @@
             const thumb = a.urlToImage ? '<div class="news-thumb" style="background-image:url(' + escapeHtml(a.urlToImage) + ');background-size:cover;background-position:center"></div>' : '<div class="news-thumb"></div>';
             const published = a.publishedAt ? new Date(a.publishedAt).toLocaleString() : '';
             const desc = a.description ? '<p>' + escapeHtml(a.description) + '</p>' : '';
-            const href = a.url ? a.url : '';
-            card.innerHTML = thumb + '<div class="news-meta"><h4>' + escapeHtml(a.title) + '</h4><p>' + escapeHtml((a.source&&a.source.name)||'') + ' · ' + escapeHtml(published) + '</p>' + desc + '<p style="margin-top:8px">' + (href ? ('<a class="btn btn-secondary" href="' + escapeHtml(href) + '" data-href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">Read more</a>') : ('<span class="btn btn-secondary" aria-disabled="true" style="opacity:0.6;pointer-events:none">Read more</span>')) + '</p></div>';
+            card.innerHTML = thumb + '<div class="news-meta"><h4>' + escapeHtml(a.title) + '</h4><p>' + escapeHtml(a.source.name) + ' · ' + escapeHtml(published) + '</p>' + desc + '<p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(a.url) + '" target="_blank">Read more</a></p></div>';
             list.appendChild(card);
           });
-        // attach reliable click handlers for dynamically inserted Read more links
-        setTimeout(() => {
-          document.querySelectorAll('#newsList a[data-href]').forEach(a => {
-            if (a.__newsHandlerAttached) return; // idempotent
-            a.addEventListener('click', function(e){
-              const h = this.getAttribute('data-href');
-              if (!h) return;
-              // open in new tab/window; some browsers block if not via user gesture — this is a direct click
-              window.open(h, '_blank');
-            });
-            a.__newsHandlerAttached = true;
-          });
-        }, 10);
       }catch(err){
         console.warn('News fetch failed:', err);
         // Fallback: show a few static items
@@ -404,21 +396,9 @@
         list.innerHTML = '';
         fallback.forEach(n => {
           const card = document.createElement('div'); card.className='news-card';
-          const href = n.url || '';
-          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px">' + (href ? ('<a class="btn btn-secondary" href="' + escapeHtml(href) + '" data-href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">Read more</a>') : ('<span class="btn btn-secondary" aria-disabled="true" style="opacity:0.6;pointer-events:none">Read more</span>')) + '</p></div>';
+          card.innerHTML = '<div class="news-thumb"></div><div class="news-meta"><h4>' + escapeHtml(n.title) + '</h4><p>' + escapeHtml(n.src) + ' · ' + escapeHtml(n.published) + '</p><p>' + escapeHtml(n.description) + '</p><p style="margin-top:8px"><a class="btn btn-secondary" href="' + escapeHtml(n.url) + '" target="_blank">Read more</a></p></div>';
           list.appendChild(card);
         });
-        setTimeout(() => {
-          document.querySelectorAll('#newsList a[data-href]').forEach(a => {
-            if (a.__newsHandlerAttached) return;
-            a.addEventListener('click', function(e){
-              const h = this.getAttribute('data-href');
-              if (!h) return;
-              window.open(h, '_blank');
-            });
-            a.__newsHandlerAttached = true;
-          });
-        }, 10);
       }
     }
 
@@ -465,8 +445,9 @@
       const search = document.getElementById('ctfSearch');
       const filter = document.getElementById('ctfFilter');
       grid.innerHTML = '<p style="color:var(--text-secondary)">Loading events…</p>';
-      // Built-in events (inline). No external events file required.
-      const builtInEvents = [
+      let events = [];
+      // Use built-in default events (no external JSON required)
+      events = [
         {
           name: 'Hack with India',
           platform: 'HackWithIndia',
@@ -475,7 +456,8 @@
           difficulty: 'Beginner',
           start_date: '2026-02-10',
           end_date: '2026-02-11',
-          reg_url: 'https://www.hackwithindia.com/'
+          reg_url: 'https://www.hackwithindia.com/',
+          region: 'global'
         },
         {
           name: 'HackWithIndia – Winter CTF',
@@ -485,7 +467,8 @@
           difficulty: 'All Levels',
           start_date: '2026-03-05',
           end_date: '2026-03-07',
-          reg_url: 'https://www.hackwithindia.com/'
+          reg_url: 'https://www.hackwithindia.com/',
+          region: 'global'
         },
         {
           name: 'Hack The Box – Weekly',
@@ -495,7 +478,8 @@
           difficulty: 'Intermediate',
           start_date: 'Ongoing',
           end_date: '',
-          reg_url: 'https://www.hackthebox.com/'
+          reg_url: 'https://www.hackthebox.com/',
+          region: 'global'
         },
         {
           name: 'TryHackMe – Advent of Cyber',
@@ -505,10 +489,10 @@
           difficulty: 'Beginner–Pro',
           start_date: '',
           end_date: '',
-          reg_url: 'https://tryhackme.com/'
+          reg_url: 'https://tryhackme.com/',
+          region: 'global'
         }
       ];
-      let events = builtInEvents.slice();
 
       // sort events: live first, then upcoming by nearest start date
       events.sort((a,b)=>{

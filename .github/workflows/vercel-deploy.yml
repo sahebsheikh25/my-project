@@ -15,6 +15,14 @@ jobs:
           node-version: '18'
       - name: Install Vercel CLI
         run: npm install -g vercel@28
+      - name: Sync public folder for static deploy
+        run: node scripts/sync_public.js
+      - name: CI debug: list public folder and show index head
+        run: |
+          echo "-- public/ listing --"
+          ls -la public || true
+          echo "\n-- public/index.html (head) --"
+          sed -n '1,120p' public/index.html || true
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

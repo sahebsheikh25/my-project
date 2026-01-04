@@ -7,26 +7,32 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
       - name: Install Vercel CLI
         run: npm install -g vercel@28
+
       - name: Sync public folder for static deploy
         run: node scripts/sync_public.js
+
       - name: CI debug: list public folder and show index head
         run: |
           echo "-- public/ listing --"
           ls -la public || true
-          printf '\n-- public/index.html (head) --\n'
+          echo ""
+          echo "-- public/index.html (head) --"
           sed -n '1,120p' public/index.html || true
+
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           vercel --prod --token $VERCEL_TOKEN --confirm
-
-# Requirements: set repository secrets `VERCEL_TOKEN` (and optionally link project via Vercel dashboard).

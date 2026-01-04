@@ -27,7 +27,6 @@ jobs:
         run: |
           echo "-- public/ listing --"
           ls -la public || true
-          echo ""
           echo "-- public/index.html (head) --"
           sed -n '1,120p' public/index.html || true
 

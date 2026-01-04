@@ -263,24 +263,5 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <script src="./ads.js" defer></script>
     <script src="./script.js" defer></script>
-        <script>
-            (function () {
-                const isMobile = window.matchMedia("(max-width: 768px)").matches;
-                const isHome =
-                    window.location.pathname === "/" ||
-                    window.location.pathname.endsWith("index.html");
-
-                // ❌ Mobile + Home = ads OFF
-                if (isMobile && isHome) {
-                    return;
-                }
-
-                // ✅ Desktop OR other pages = ads ON
-                const adScript = document.createElement("script");
-                adScript.src = "https://push-sdk.propellerads.com/XXXX.js"; // ← apna ad script URL
-                adScript.async = true;
-                document.body.appendChild(adScript);
-            })();
-        </script>
 </body>
 </html>

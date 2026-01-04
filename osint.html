@@ -131,12 +131,19 @@
       .osint-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
       .tool-btn{padding:10px;font-size:0.9rem}
       .top-marquee .marquee-inner{gap:18px;animation-duration:40s}
-      /* Increase top padding so the hero headline clears the notification marquee/nav */
-      .tools-hero{padding:calc(64px + 36px) 12px 28px}
-      .hero-title{font-size:1.6rem}
+      /* Reduce hero padding on small screens — use site-top-offset to clear navbar+marquee */
+      .tools-hero{padding:calc(var(--site-top-offset) + 6px) 12px 18px; min-height:28vh}
+      .hero-title{font-size:1.35rem}
       /* Reduce marquee footprint on very small screens to avoid overlapping hero */
       .top-marquee, .top-marquee-home{padding:4px 6px}
       .top-marquee a, .top-marquee-home a{font-size:0.9rem}
+    }
+
+    /* Very small screens: hide duplicated home marquee to avoid overlap and reduce paint */
+    @media (max-width:380px){
+      .top-marquee-home{display:none}
+      .tools-hero{padding:calc(var(--site-top-offset) + 6px) 10px 12px; min-height:24vh}
+      .hero-title{font-size:1.25rem}
     }
   </style>
 </head>

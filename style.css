@@ -82,6 +82,62 @@ body {
     .container{padding-top:calc(var(--site-nav-height) + var(--top-ad-height) + var(--top-ad-gap));}
 }
 
+/* Mobile-specific safety rules for navbar + top ad (ensures navbar always clickable) */
+@media (max-width: 768px) {
+    /* make sure fixed navbar is above ads and clickable */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--site-nav-height);
+        z-index: 2200; /* higher than ad */
+        pointer-events: auto;
+    }
+
+    /* mobile top ad container sits in normal flow directly after navbar */
+    .top-ad-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+        background: transparent;
+        z-index: 2100; /* below navbar but above page content */
+        overflow: hidden;
+    }
+
+    /* reserve space when an ad is active to avoid CLS */
+    body.top-ad-active {
+        padding-top: calc(var(--site-nav-height) + var(--top-ad-height));
+    }
+
+    /* Neutralize provider-injected fixed/sticky ads inside our container */
+    .top-ad-container [style*="position:fixed"],
+    .top-ad-container .sticky-ad,
+    .top-ad-container .ad-sticky,
+    .top-ad-container ins.adsbygoogle {
+        position: static !important;
+        top: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Defensive: neutralize any fixed ads not inside our container */
+    [style*="position:fixed"][data-ad-auto],
+    .floating-ad, .floating-ad-slot {
+        position: static !important;
+        top: auto !important;
+        bottom: auto !important;
+    }
+
+    /* ensure nav-toggle sits comfortably above everything for clicks */
+    .nav-toggle { z-index: 2300; }
+}
+
 /* Prevent duplicate/stacked top ads: hide any additional top-ad-container instances */
 .top-ad-container + .top-ad-container{display:none !important}
 

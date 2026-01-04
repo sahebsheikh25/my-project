@@ -35,6 +35,88 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+/* Mobile top-ad manager: create/move a single mobile top ad under the navbar,
+     neutralize sticky/fixed injected ads and reserve layout space (<=768px only) */
+document.addEventListener('DOMContentLoaded', function () {
+    try {
+        if (window.innerWidth > 768) return;
+
+        var nav = document.querySelector('.navbar');
+        if (!nav) return; // no navbar on this page
+
+        var adId = 'mobile-top-ad';
+        var adContainer = document.getElementById(adId);
+        if (!adContainer) {
+            adContainer = document.createElement('div');
+            adContainer.id = adId;
+            adContainer.className = 'top-ad-container';
+            adContainer.setAttribute('role','complementary');
+            adContainer.setAttribute('aria-label','Top advertisement');
+            adContainer.setAttribute('aria-hidden','true');
+            // insert after navbar so DOM order is: navbar -> ad -> content
+            nav.parentNode.insertBefore(adContainer, nav.nextSibling);
+        }
+
+        function normalizeAd(el){
+            if (!el) return;
+            el.style.position = 'static';
+            el.style.top = '';
+            el.style.bottom = '';
+            el.style.left = '';
+            el.style.right = '';
+            el.style.transform = '';
+            el.style.maxWidth = '100%';
+            el.style.width = '100%';
+            el.dataset.adNormalized = '1';
+        }
+
+        function adoptFirstAd(){
+            var selectors = ['ins.adsbygoogle', '.sticky-ad', '.ad-slot', '[data-ad]', '.dfp-ad', '.top-sticky', '.top-ad'];
+            var found = null;
+            for (var i = 0; i < selectors.length; i++){
+                var node = document.querySelector(selectors[i]);
+                if (node && !adContainer.contains(node)) { found = node; break; }
+            }
+            if (!found) return false;
+
+            // remove existing children (allow only one banner)
+            while (adContainer.firstChild) adContainer.removeChild(adContainer.firstChild);
+            normalizeAd(found);
+            try { adContainer.appendChild(found); } catch(e) {
+                try { adContainer.appendChild(found.cloneNode(true)); } catch(e) { return false; }
+            }
+            adContainer.setAttribute('aria-hidden','false');
+            document.body.classList.add('top-ad-active');
+            // update CSS var to actual height
+            requestAnimationFrame(function(){
+                var h = adContainer.offsetHeight || parseInt(getComputedStyle(adContainer).height,10) || 0;
+                if (h) document.documentElement.style.setProperty('--top-ad-height', h + 'px');
+            });
+            return true;
+        }
+
+        adoptFirstAd();
+
+        var obs = new MutationObserver(function(){ if (adContainer.children.length===0) adoptFirstAd(); });
+        obs.observe(document.body, { childList: true, subtree: true });
+
+        // Neutralize other floating/fixed ad elements outside our container
+        function neutralizeFloatingAds(){
+            var floats = Array.from(document.querySelectorAll('[style*="position:fixed"], .sticky-ad, .floating-ad, .ad-sticky'));
+            floats.forEach(function(el){
+                if (!adContainer.contains(el) && !el.closest('#' + adId)) {
+                    el.style.position = 'static';
+                    el.style.top = '';
+                    el.style.bottom = '';
+                }
+            });
+        }
+        neutralizeFloatingAds();
+        var neutralizer = setInterval(neutralizeFloatingAds, 1500);
+        setTimeout(function(){ clearInterval(neutralizer); obs.disconnect(); }, 15000);
+    } catch(e){ console.warn('mobile ad manager error', e); }
+});
+
 // Mobile Navigation Toggle — robust and defer-safe
 document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('navToggle');

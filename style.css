@@ -255,6 +255,8 @@ body {
     position: relative;
 }
 
+/* (restored) Hero uses inline image element positioned as decorative background */
+
 /* ===== Tools Hero (shared) ===== */
 .tools-hero {
     min-height: 60vh;

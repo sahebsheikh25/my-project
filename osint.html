@@ -10,10 +10,21 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" as="style" onload="this.rel='stylesheet'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"></noscript>
   <style>
-    .tools-hero{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:120px 20px 60px;background:linear-gradient(135deg, rgba(1,9,19,0.9) 0%, rgba(10,26,46,0.8)100%);position:relative}
+     /* Ensure content is positioned below the (fixed) navbar and marquee.
+       Centralized spacing vars so only one controlled top spacing is used. */
+     :root{
+      --site-nav-height:72px; /* adjust to your navbar actual height if needed */
+      --top-marquee-height:36px; /* approximate height of top marquee; set to 0 if not used */
+      --site-top-offset: calc(var(--site-nav-height) + var(--top-marquee-height));
+     }
+     /* Help anchored scrolling avoid hidden headings under the fixed navbar */
+     html{ scroll-padding-top: var(--site-top-offset); }
+
+    /* Use the single controlled top offset so hero clears navbar+marquee without duplicate padding */
+    .tools-hero{min-height:2vh;display:flex;align-items:center;justify-content:center;padding:calc(var(--site-top-offset) + 6px) 20px 60px;background:linear-gradient(135deg, rgba(1,9,19,0.9) 0%, rgba(10,26,46,0.8)100%);position:relative}
     .tools-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg, rgba(1,9,19,0.9) 0%, rgba(10,26,46,0.8)100%)}
     .tools-hero .hero-content{position:relative;z-index:1;text-align:center}
-    .hero-title{font-family:var(--font-heading);color:var(--accent-primary);font-size:3rem;letter-spacing:2px;margin:0 0 8px;text-transform:uppercase}
+    .hero-title{font-family:var(--font-heading);color:var(--accent-primary);font-size:3rem;letter-spacing:2px;margin:0;text-transform:uppercase}
     .neon-glow{text-shadow:0 0 8px var(--glow-color)}
     .hero-tagline{color:var(--text-secondary);margin:0}
     .osint-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:20px}
@@ -89,6 +100,44 @@
       .osint-layout{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start}
       .toc{position:sticky;top:84px;padding:14px;border-radius:10px;background:linear-gradient(90deg, rgba(6,12,22,0.55), rgba(8,18,30,0.5));border:1px solid rgba(127,219,255,0.04)}
     }
+     /* Ensure hero and first content clear the fixed navbar on all viewports
+       Tighten gap so the headline sits closer to the navbar while remaining clear. */
+     .tools-hero{padding-top:calc(var(--site-nav-height) + 2px)}
+     @media(min-width:920px){ .tools-hero{padding-top:calc(var(--site-nav-height) + 8px)} }
+    /* Responsive adjustments for smaller devices */
+    @media (max-width:919px){
+      /* Stack TOC above content for small screens */
+      .osint-layout{display:block;margin-top:18px}
+      .osint-layout .toc{position:relative;top:auto;padding:12px 8px;margin-bottom:18px;border-radius:10px}
+      .osint-layout main.container{padding:0}
+      /* Make the OSINT grid denser on small screens */
+      .osint-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+      /* Ensure lookup cards and buttons fit and wrap nicely */
+      .lookup-card{padding:16px}
+      .lookup-input{padding:12px 10px;font-size:15px}
+      .lookup-buttons{gap:8px}
+      .tool-btn{padding:10px 12px;font-size:0.95rem}
+      .tool-btn svg{width:18px;height:18px}
+      .tool-box{padding:10px;border-radius:10px}
+      .tool-box::before{width:min(220px,60vw);height:min(220px,60vw)}
+      /* Reduce marquee spacing on small screens to avoid overflow */
+      .top-marquee .marquee-inner{gap:28px}
+      .top-marquee a{font-size:0.95rem;padding:6px 12px}
+      /* Prevent accidental horizontal scroll */
+      html,body{overflow-x:hidden}
+    }
+
+    @media (max-width:520px){
+      .osint-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+      .tool-btn{padding:10px;font-size:0.9rem}
+      .top-marquee .marquee-inner{gap:18px;animation-duration:40s}
+      /* Increase top padding so the hero headline clears the notification marquee/nav */
+      .tools-hero{padding:calc(64px + 36px) 12px 28px}
+      .hero-title{font-size:1.6rem}
+      /* Reduce marquee footprint on very small screens to avoid overlapping hero */
+      .top-marquee, .top-marquee-home{padding:4px 6px}
+      .top-marquee a, .top-marquee-home a{font-size:0.9rem}
+    }
   </style>
 </head>
 <body>
@@ -131,15 +180,15 @@
       <h1 class="hero-title neon-glow">OSINT Tools & Resources</h1>
       <p class="hero-tagline">Open Source Intelligence gathering tools and techniques</p>
       <!-- Floating left-top homepage notification (moved out of hero for consistent visibility) -->
-  <div class="top-marquee-home" role="region" aria-label="Important notification">
+    </div>
+  </section>
+   <div class="top-marquee-home" role="region" aria-label="Important notification">
     <div class="marquee-inner" aria-hidden="false">
             <a href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
             <a href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
             <a href="https://www.ceir.gov.in/Request/CeirUserBlockRequestDirect.jsp" target="_blank" rel="noopener noreferrer">Lost / Stolen Mobile? Block It Now — CLICK HERE</a>
     </div>
   </div>
-    </div>
-  </section>
 
 
   <!-- Two-column layout: TOC (left) + content (right) -->

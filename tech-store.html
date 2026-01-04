@@ -22,11 +22,27 @@
 <nav class="navbar">
   <div class="nav-container">
     <div class="nav-logo">
-      <a href="index.html">
-        <img src="assets/logo.svg" alt="SN Security">
+      <a href="./index.html" class="nav-home" aria-label="SN Security Home">
+        <img src="./assets/logo.svg" alt="SN Security Logo" width="40" height="40" decoding="async" loading="lazy">
         <span>SN Security</span>
       </a>
     </div>
+    <div class="nav-toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="./index.html" class="nav-link">Home</a></li>
+      <li><a href="./roadmap.html" class="nav-link">Roadmap</a></li>
+      <li><a href="./tools.html" class="nav-link">Tools</a></li>
+      <li><a href="./tech-store.html" class="nav-link active">Store</a></li>
+      <li><a href="./ctf-news.html" class="nav-link">CTF & News</a></li>
+      <li><a href="./osint.html" class="nav-link">OSINT</a></li>
+      <li><a href="./about.html" class="nav-link">About</a></li>
+      <li><a href="./contact.html" class="nav-link">Contact</a></li>
+      <li><a href="./legal.html" class="nav-link">Legal</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -159,6 +175,7 @@
 </script>
 
 <script src="./ads.js" defer></script>
+<script src="./script.js" defer></script>
 <script src="store.js"></script>
 </body>
 </html>

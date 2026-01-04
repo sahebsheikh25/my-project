@@ -20,11 +20,15 @@ body{
 
 .container{max-width:1200px;margin:0 auto;padding:24px}
 
-.store-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.store-header{display:flex;align-items:center;justify-content:space-between;padding:2px 0}
+.store-header{
+  margin-top: 72px; /* navbar height ke hisaab se */
+}
+
 .store-brand{display:flex;gap:14px;align-items:center}
 .store-logo{width:72px;height:72px;border-radius:10px;box-shadow:0 8px 40px rgba(0,255,178,0.10);border:1px solid rgba(0,255,178,0.06)}
 .store-brand h1{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.2rem;margin:0}
-.store-brand .sub{color:var(--muted);font-size:0.85rem;margin-top:2px}
+.store-brand .sub{color:var(--muted);font-size:0.85rem;margin-top:5px}
 
 .back-link{color:var(--muted);text-decoration:none;font-weight:700;padding:6px 10px;border-radius:8px;border:1px solid transparent}
 .back-link:hover{color:var(--accent);box-shadow:0 8px 28px rgba(0,255,178,0.04)}
@@ -90,6 +94,7 @@ body{
 /* Responsive improvements for Store page */
 @media (max-width:1024px){
     .store-header{flex-wrap:wrap;gap:12px;padding:14px 0}
+    
     .back-link{order:0}
     .store-brand{order:1}
     .store-controls{order:2;width:100%;justify-content:space-between}

@@ -139,3 +139,4 @@ document.addEventListener('DOMContentLoaded',()=>{
     // show/hide clear button appropriately on load
     try{ updateClear(); }catch(e){}
 });
+

@@ -35,33 +35,114 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Mobile Navigation Toggle
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
+// Mobile Navigation Toggle — robust and defer-safe
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (!navToggle || !navMenu) return; // nothing to do
 
-if (navToggle) {
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        
-        // Animate hamburger
+    // initialize aria state
+    navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active') ? 'true' : 'false');
+
+    function setHamburgerState(isOpen){
         const spans = navToggle.querySelectorAll('span');
-        spans[0].style.transform = navMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : '';
-        spans[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
-        spans[2].style.transform = navMenu.classList.contains('active') ? 'rotate(-45deg) translate(7px, -6px)' : '';
+        if (spans.length >= 3) {
+            if (isOpen){
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = '';
+            }
+        }
+    }
+
+    let _lastTouch = 0;
+    function toggleNavFromEvent(e){
+        // prevent duplicate handling when touch triggers click
+        if(e.type === 'click' && (Date.now() - _lastTouch) < 600) return;
+        if(e.type === 'touchstart') _lastTouch = Date.now();
+        e.preventDefault();
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        setHamburgerState(isOpen);
+    }
+    navToggle.addEventListener('click', toggleNavFromEvent);
+    navToggle.addEventListener('touchstart', toggleNavFromEvent);
+    // keyboard support: Enter/Space to toggle
+    navToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            toggleNavFromEvent(e);
+        }
     });
 
-    // Close menu when clicking on a link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
+    // Close menu when clicking on a nav link (mobile)
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = '';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = '';
+            if (navMenu.classList.contains('active')){
+                navMenu.classList.remove('active');
+                navToggle.setAttribute('aria-expanded','false');
+                setHamburgerState(false);
+            }
         });
     });
-}
+
+    // Optional: close on outside click
+    document.addEventListener('click', (ev) => {
+        if (!navMenu.contains(ev.target) && !navToggle.contains(ev.target) && navMenu.classList.contains('active')){
+            navMenu.classList.remove('active');
+            navToggle.setAttribute('aria-expanded','false');
+            setHamburgerState(false);
+        }
+    });
+
+    // (no dynamic resize adjustments — CSS handles responsive menu sizing)
+});
+
+/* Top ad management: ensure only one top ad and prevent layout shift
+   - Move any auto-injected sticky/top fixed ad into #top-ad-slot when possible
+   - Remove duplicates and ensure reserved height remains
+*/
+document.addEventListener('DOMContentLoaded', () => {
+    const adContainer = document.getElementById('top-ad-area');
+    const adSlot = document.getElementById('top-ad-slot');
+    if (!adContainer || !adSlot) return;
+
+    // Find potential injected sticky ads (common heuristics)
+    const injectedCandidates = Array.from(document.querySelectorAll('[id*="ad"], [class*="ad"], .sticky-ad, .ad-sticky, .top-sticky')).filter(el => {
+        // exclude our own slot
+        return el !== adSlot && el !== adContainer && el.closest('#top-ad-area') === null;
+    });
+
+    // Move the first candidate into our slot (if it's fixed or positioned at top)
+    for (const c of injectedCandidates){
+        const style = window.getComputedStyle(c);
+        if (style.position === 'fixed' || style.position === 'sticky' || /top|banner|header/i.test(c.id+ ' '+ (c.className||'')) ){
+            // clone or move it safely
+            try{
+                adSlot.innerHTML = '';
+                adSlot.appendChild(c);
+                adContainer.setAttribute('aria-hidden','false');
+            }catch(e){
+                // fallback: clone
+                try{ adSlot.appendChild(c.cloneNode(true)); adContainer.setAttribute('aria-hidden','false'); }catch(e){}
+            }
+            break;
+        }
+    }
+
+    // Hide any other top-like ads to prevent stacking
+    const others = Array.from(document.querySelectorAll('.top-ad-container')).slice(1);
+    others.forEach(o=> o.style.display = 'none');
+
+    // Ensure adContainer keeps reserved height even if empty to prevent CLS
+    if (!adSlot.querySelector('*')){
+        adContainer.setAttribute('aria-hidden','true');
+    }
+});
 
 // Active Navigation Link
 const currentLocation = location.pathname.split('/').pop() || 'index.html';

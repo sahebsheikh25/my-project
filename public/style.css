@@ -870,7 +870,7 @@ main.container { padding: 48px 20px; }
 
 @media (max-width: 420px) {
     main.container { padding: 18px 10px; }
-    .hero-title { font-size: 2rem; }
+    .hero-title { font-size: 4rem; }
 }
 
 /* ===== Custom Scrollbar ===== */

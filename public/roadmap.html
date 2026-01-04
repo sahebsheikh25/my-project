@@ -58,7 +58,7 @@
         .roadmap-step::before {
             content: '';
             position: absolute;
-            left: -20px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
             width: 40px;
@@ -79,7 +79,7 @@
 
         .step-number {
             position: absolute;
-            left: -15px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
             width: 30px;
@@ -181,10 +181,10 @@
 
         .roadmap-timeline {
             position: absolute;
-            left: 0;
+            left: 32px;
             top: 0;
             bottom: 0;
-            width: 2px;
+            width: 3px;
             background: linear-gradient(180deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
             box-shadow: 0 0 10px var(--glow-color);
         }
@@ -192,7 +192,7 @@
         /* Wrapper to control timeline offset and left padding (replace inline styles) */
         .roadmap-inner {
             position: relative;
-            padding-left: 40px;
+            padding-left: 64px;
         }
 
         @media (max-width: 768px) {
@@ -239,6 +239,9 @@
 
         /* Additional small-screen tweaks to avoid horizontal overflow and improve readability */
         html, body { -webkit-text-size-adjust: 100%; }
+
+        /* Safety: prevent horizontal scroll from absolute-positioned markers */
+        body { overflow-x: hidden; }
 
         .roadmap-container img{ max-width:100%; height:auto; }
 
